@@ -53,28 +53,6 @@ namespace AspnetCoreMvcFull.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("AspnetCoreMvcFull.Models.Pagination", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CurrentPage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemsPerPage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalItems")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Paginations");
-                });
-
             modelBuilder.Entity("AspnetCoreMvcFull.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -92,16 +70,52 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("caosubemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("caosuloplot")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("chieudaicatlon")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("chieudaicatnho")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("chieudaithanchinhbemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("chieudaithanchinhloplot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("chieudaithannoibemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("chieudaithannoiloplot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("docobemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("docoloplot")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("doday")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("khotieuchuanbemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("khotieuchuanloplot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("khuondunbemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("khuondunloplot")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("khuonlodie")
@@ -112,6 +126,9 @@ namespace AspnetCoreMvcFull.Migrations
 
                     b.Property<int?>("mahang")
                         .HasColumnType("int");
+
+                    b.Property<string>("may")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -131,6 +148,12 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<string>("soi2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("solinkthanchinh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("solinkthannoi")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("sosoi")
                         .HasColumnType("int");
 
@@ -144,6 +167,18 @@ namespace AspnetCoreMvcFull.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("tocdomaydun")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("trongluongthanchinhbemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("trongluongthanchinhloplot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("trongluongthannoibemat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("trongluongthannoiloplot")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
