@@ -29,10 +29,11 @@ namespace AspnetCoreMvcFull.Controllers
       {
         products = await _productCSCTLService.SearchProductsByNameAsync(searchName, categoryId, page, pageSize);
       }
-      else {
+      else
+      {
         products = await _productCSCTLService.GetProducts(categoryId, page, pageSize);
-      } 
-      return View("~/Views/ProductCTL/ListCaoSuCTL.cshtml",products);
+      }
+      return View("~/Views/ProductCTL/ListCaoSuCTL.cshtml", products);
     }
     public async Task<IActionResult> SearchCS(string name, int page = 1)
     {
