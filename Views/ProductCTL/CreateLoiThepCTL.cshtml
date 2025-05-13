@@ -2,7 +2,6 @@
 @{
 	ViewData["Title"] = "Thêm Công Việc Lõi Thép CTL";
 }
-
 <div class="row">
 	<div class="col-xxl">
 		<div class="card mb-6">
@@ -30,91 +29,16 @@
 								</div>
 							</div>
 							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="nhietdodaumaydun">Nhiệt Độ Đầu Máy Đùn</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="nhietdodaumaydun" placeholder="Nhiệt Độ Đầu Máy Đùn" />
-									<span asp-validation-for="nhietdodaumaydun" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="nhietdotrucxoan">Nhiệt Độ Trục Xoắn</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="nhietdotrucxoan" placeholder="Nhiệt Độ Trục Xoắn" />
-									<span asp-validation-for="nhietdotrucxoan" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="tocdocolingdrum">Tốc Độ Cooling Drum</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="tocdocolingdrum" placeholder="Khuôn Sợi Holder" />
-									<span asp-validation-for="tocdocolingdrum" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="loitheptruockhidun">Lõi Thép Trước Khi Đùn</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="loitheptruockhidun" placeholder="Lõi Thép Trước Khi Đùn" />
-									<span asp-validation-for="loitheptruockhidun" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="loithepsaukhidun">Lõi Thép Sau Khi Đùn</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="loithepsaukhidun" placeholder="Lõi Thép Sau Khi Đùn" />
-									<span asp-validation-for="loithepsaukhidun" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="caosur514">Cao Su Đùn</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="caosur514" placeholder="Cao Su Đùn" />
-									<span asp-validation-for="caosur514" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="caosuketdinh">Cao Su Kết Dính</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="caosuketdinh" placeholder="Cao Su Kết Dính" />
-									<span asp-validation-for="caosuketdinh" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="caosubo">Cao Su Bố</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="caosubo" placeholder="Cao Su Bố" />
-									<span asp-validation-for="caosubo" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="tocdoduncaosu">Tốc Độ Đùn Cao Su</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="tocdoduncaosu" placeholder="Tốc Độ Đùn Cao Su" />
-									<span asp-validation-for="tocdoduncaosu" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="aplucdaudunloithep">Áp Lực Đầu Đùn Lõi Thép</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="aplucdaudunloithep" placeholder="Áp Lực Đầu Đùn Lõi Thép" />
-									<span asp-validation-for="aplucdaudunloithep" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label" for="tocdoquan">Tốc Độ Quấn</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" asp-for="tocdoquan" placeholder="Tốc Độ Quấn" />
 									<span asp-validation-for="tocdoquan" class="text-danger"></span>
 								</div>
 							</div>
-						</div>
-
-						<!-- Cột bên phải -->
-						<div class="col-md-6">
-							
 							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label" for="chieudailoithep">Chiều Dài Lõi Thép</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="chieudailoithep" placeholder="Chiều Dài Lõi Thép" />
+									<input type="text" class="form-control" asp-for="chieudailoithep" placeholder="Khoảng Cách 2 Đầu Mối Nối Bố" />
 									<span asp-validation-for="chieudailoithep" class="text-danger"></span>
 								</div>
 							</div>
@@ -146,6 +70,9 @@
 									<span asp-validation-for="dodaycaosuketdinh3t" class="text-danger"></span>
 								</div>
 							</div>
+						</div>
+						<!-- Cột bên phải -->
+						<div class="col-md-6">
 							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label" for="khocaosuketdinh3t">Khổ Cao Su Kết Dính 3T</label>
 								<div class="col-sm-8">
@@ -181,13 +108,7 @@
 									<span asp-validation-for="khoangcach2daumoinoiloithep" class="text-danger"></span>
 								</div>
 							</div>
-							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="khoangcach2daumoinoibo">2 Đầu Mối Nối Bố</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="khoangcach2daumoinoibo" placeholder="Khoảng Cách 2 Đầu Mối Nối Bố" />
-									<span asp-validation-for="khoangcach2daumoinoibo" class="text-danger"></span>
-								</div>
-							</div>
+							
 							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label" for="kichthuoccuacaosudanmoinoi">Cao Su Dán Mối Nối</label>
 								<div class="col-sm-8">
