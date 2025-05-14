@@ -8,31 +8,36 @@ namespace AspnetCoreMvcFull.Models
     public int? mahang { get; set; }
     public string? mahangctl { get; set; }
     public string? name { get; set; }
-    public string? image { get; set; }
+    public string? image {  get; set; }
     public string? quycachloithep { get; set; }
     public string? khuonlodie { get; set; }
     public string? khuonsoiholder { get; set; }
-    public int? sosoi { get; set; }
+    public int? sosoi { get; set;}
     public string? pitch { get; set; }
     public string? tieuchuan { get; set; }
     public string? thucte { get; set; }
-    public string? doday { get; set; }
+    public string? doday {  get; set; }
     public string? soi1 { get; set; }
     public string? soi2 { get; set; }
+<<<<<<< HEAD
     public string? sodaycatduoc { get; set; } 
     public string? chieudaicatlon { get; set; }
+=======
+    public string? sodaycatduoc { get; set; }
+    public string? chieudaicatlon {  get; set; }
+>>>>>>> parent of d3ddfe7 (update loithepctl)
     public string? chieudaicatnho { get; set; }
-    public string? tocdomaydun { get; set; }
+    public  string? tocdomaydun {  get; set; }
     public string? tocdokeo { get; set; }
     public string? may { get; set; }
     public string? solinkthanchinh { get; set; }
     public string? solinkthannoi { get; set; }
     public string? caosuloplot { get; set; }
-    public string? caosubemat { get; set; }
+    public string? caosubemat {  get; set; }
     public string? docoloplot { get; set; }
     public string? docobemat { get; set; }
     public string? khuondunloplot { get; set; }
-    public string? khuondunbemat { get; set; }
+    public string? khuondunbemat {  get; set; }
     public string? khotieuchuanloplot { get; set; }
     public string? khotieuchuanbemat { get; set; }
     public string? chieudaithanchinhloplot { get; set; }
@@ -43,12 +48,13 @@ namespace AspnetCoreMvcFull.Models
     public string? trongluongthanchinhbemat { get; set; }
     public string? trongluongthannoiloplot { get; set; }
     public string? trongluongthannoibemat { get; set; }
-    public string? trongluongdaukibemat { get; set; }
+    public string? trongluongdaukibemat { get; set; }   
     public string? trongluongdaukiloplot { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; }
     public int CategoryId { get; set; }
     public Category Category { get; set; }
+<<<<<<< HEAD
     public string? chieudailoithep { get; set; }
     public string? khoangcach2daumoinoiloithep { get; set; }
     public string? khocaosubo { get; set; }
@@ -61,5 +67,8 @@ namespace AspnetCoreMvcFull.Models
     public string? trongluongloithepspinning { get; set; }
     public string? dodaycaosubo { get; set; }
     public string? dodaycaosuketdinh3t { get; set; }
+=======
+
+>>>>>>> parent of d3ddfe7 (update loithepctl)
   }
 }
