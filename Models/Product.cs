@@ -19,13 +19,10 @@ namespace AspnetCoreMvcFull.Models
     public string? doday {  get; set; }
     public string? soi1 { get; set; }
     public string? soi2 { get; set; }
-<<<<<<< HEAD
+
     public string? sodaycatduoc { get; set; } 
     public string? chieudaicatlon { get; set; }
-=======
-    public string? sodaycatduoc { get; set; }
-    public string? chieudaicatlon {  get; set; }
->>>>>>> parent of d3ddfe7 (update loithepctl)
+
     public string? chieudaicatnho { get; set; }
     public  string? tocdomaydun {  get; set; }
     public string? tocdokeo { get; set; }
@@ -54,7 +51,6 @@ namespace AspnetCoreMvcFull.Models
     public DateTime? UpdatedAt { get; set; }
     public int CategoryId { get; set; }
     public Category Category { get; set; }
-<<<<<<< HEAD
     public string? chieudailoithep { get; set; }
     public string? khoangcach2daumoinoiloithep { get; set; }
     public string? khocaosubo { get; set; }
@@ -67,8 +63,6 @@ namespace AspnetCoreMvcFull.Models
     public string? trongluongloithepspinning { get; set; }
     public string? dodaycaosubo { get; set; }
     public string? dodaycaosuketdinh3t { get; set; }
-=======
 
->>>>>>> parent of d3ddfe7 (update loithepctl)
   }
 }
