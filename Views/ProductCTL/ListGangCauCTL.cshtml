@@ -92,16 +92,15 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	function deleteGCCTL(productId) {
+	<script>
+			function deleteGCCTL(productId) {
 		if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
 			$.ajax({
-				url: '/GangCauCTLCotroller/DeleteProductGCCTL',
+				url: '@Url.Action("DeleteProductGCCTL", "GangCauCTLCotroller")',
 				type: 'POST',
 				data: { ProductId: productId },
 				success: function (result) {
-					alert("Sản phẩm đã được xóa thành công!");
+					alert("Xóa sản phẩm thành công!");
 					location.reload();
 				},
 				error: function (xhr, status, error) {
@@ -110,7 +109,8 @@
 			});
 		}
 	}
-	function modalGCCTL(productId) {
+
+			function modalGCCTL(productId) {
 		$.ajax({
 			url: '@Url.Action("showProductGC", "GangCauCTLCotroller")',
 			type: 'GET',
@@ -124,4 +124,4 @@
 			}
 		});
 	}
-</script>
+	</script>

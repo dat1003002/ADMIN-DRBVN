@@ -1,126 +1,149 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace AspnetCoreMvcFull.Migrations
 {
     /// <inheritdoc />
-    public partial class message : Migration
+    public partial class TenMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.AddColumn<string>(
-                name: "caosubemat",
+                name: "aplucdaudunloithep",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "caosuloplot",
+                name: "caosubo",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "chieudaithanchinhbemat",
+                name: "caosuketdinh",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "chieudaithanchinhloplot",
+                name: "caosur514",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "chieudaithannoibemat",
+                name: "chieudailoithep",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "chieudaithannoiloplot",
+                name: "dodaycaosubo",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "docobemat",
+                name: "dodaycaosuketdinh3t",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "docoloplot",
+                name: "khoangcach2daumoinoibo",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "khotieuchuanbemat",
+                name: "khoangcach2daumoinoiloithep",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "khotieuchuanloplot",
+                name: "khocaosubo",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "khuondunbemat",
+                name: "khocaosuketdinh3t",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "khuondunloplot",
+                name: "kholoithep",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "may",
+                name: "kichthuoccuacaosudanmoinoi",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "solinkthanchinh",
+                name: "loithepsaukhidun",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "solinkthannoi",
+                name: "loitheptruockhidun",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "trongluongthanchinhbemat",
+                name: "nhietdodaumaydun",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "trongluongthanchinhloplot",
+                name: "nhietdotrucxoan",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "trongluongthannoibemat",
+                name: "solink",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "trongluongthannoiloplot",
+                name: "sosoiloithep",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "tocdocolingdrum",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "tocdoduncaosu",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "tocdoquan",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "trongluongloithepspinning",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -130,95 +153,96 @@ namespace AspnetCoreMvcFull.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "caosubemat",
+                name: "aplucdaudunloithep",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "caosuloplot",
+                name: "caosubo",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "chieudaithanchinhbemat",
+                name: "caosuketdinh",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "chieudaithanchinhloplot",
+                name: "caosur514",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "chieudaithannoibemat",
+                name: "chieudailoithep",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "chieudaithannoiloplot",
+                name: "dodaycaosubo",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "docobemat",
+                name: "dodaycaosuketdinh3t",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "docoloplot",
+                name: "khoangcach2daumoinoibo",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "khotieuchuanbemat",
+                name: "khoangcach2daumoinoiloithep",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "khotieuchuanloplot",
+                name: "khocaosubo",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "khuondunbemat",
+                name: "khocaosuketdinh3t",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "khuondunloplot",
+                name: "kholoithep",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "may",
+                name: "kichthuoccuacaosudanmoinoi",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "solinkthanchinh",
+                name: "loithepsaukhidun",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "solinkthannoi",
+                name: "loitheptruockhidun",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "trongluongthanchinhbemat",
+                name: "nhietdodaumaydun",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "trongluongthanchinhloplot",
+                name: "nhietdotrucxoan",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "trongluongthannoibemat",
+                name: "solink",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "trongluongthannoiloplot",
+                name: "sosoiloithep",
                 table: "Products");
 
-            migrationBuilder.CreateTable(
-                name: "Paginations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CurrentPage = table.Column<int>(type: "int", nullable: false),
-                    ItemsPerPage = table.Column<int>(type: "int", nullable: false),
-                    TotalItems = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Paginations", x => x.Id);
-                });
+            migrationBuilder.DropColumn(
+                name: "tocdocolingdrum",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "tocdoduncaosu",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "tocdoquan",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "trongluongloithepspinning",
+                table: "Products");
         }
     }
 }

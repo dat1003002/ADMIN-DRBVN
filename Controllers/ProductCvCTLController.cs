@@ -25,6 +25,7 @@ namespace AspnetCoreMvcFull.Controllers
       if (!string.IsNullOrEmpty(searchName))
       {
         products = await _productCvCTLService.SearchProductsByNameAsync(searchName, categoryId, page, pageSize);
+        ViewData["SearchTerm"] = searchName;
       }
       else
       {
@@ -32,15 +33,18 @@ namespace AspnetCoreMvcFull.Controllers
       }
       return View("~/Views/ProductCTL/ListTieuChuanCTL.cshtml", products);
     }
+
     [HttpPost]
     public async Task<IActionResult> Search(string name, int page = 1)
     {
-      const int categoryId = 3; // ID danh mục cố định
+      const int categoryId = 3;
       const int pageSize = 9;
 
       var products = await _productCvCTLService.SearchProductsByNameAsync(name, categoryId, page, pageSize);
+      ViewData["SearchTerm"] = name;
       return View("ListTieuChuanCTL", products);
     }
+
     public async Task<IActionResult> CreateProductCvCTL()
     {
       var categories = await _productCvCTLService.GetCategories();
@@ -55,7 +59,6 @@ namespace AspnetCoreMvcFull.Controllers
     {
       if (ModelState.IsValid)
       {
-        // Lưu hình ảnh (nếu có) và thiết lập thuộc tính image
         if (product.imageFile != null)
         {
           var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", product.imageFile.FileName);
@@ -66,7 +69,6 @@ namespace AspnetCoreMvcFull.Controllers
           product.image = product.imageFile.FileName;
         }
 
-        // Gọi phương thức lưu từ service
         await _productCvCTLService.CreateProductAsync(product);
         return RedirectToAction("ListTieuChuanCTL");
       }
@@ -76,6 +78,7 @@ namespace AspnetCoreMvcFull.Controllers
       ViewBag.CategoryList = new SelectList(filtercategories, "CategoryId", "CategoryName");
       return View(product);
     }
+
     public async Task<IActionResult> EditProductCTL(int id)
     {
       var product = await _productCvCTLService.GetProductByIdAsync(id);
@@ -89,34 +92,31 @@ namespace AspnetCoreMvcFull.Controllers
       ViewBag.CategoryList = new SelectList(filEditcategories, "CategoryId", "CategoryName");
       return View(product);
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditProductCTL(ProductCTLDTO product)
     {
       if (ModelState.IsValid)
       {
-        // Tải hình ảnh cũ từ cơ sở dữ liệu
         var existingProduct = await _productCvCTLService.GetProductByIdAsync(product.ProductId);
         if (existingProduct != null)
         {
-          // Nếu không có hình ảnh mới thì giữ lại hình ảnh cũ
           if (product.imageFile == null)
           {
-            product.image = existingProduct.image; // Giữ lại hình ảnh cũ
+            product.image = existingProduct.image;
           }
           else
           {
-            // Lưu hình ảnh mới
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", product.imageFile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
               await product.imageFile.CopyToAsync(stream);
             }
-            product.image = product.imageFile.FileName; // Cập nhật hình ảnh mới
+            product.image = product.imageFile.FileName;
           }
         }
 
-        // Gọi phương thức lưu từ service
         await _productCvCTLService.UpdateProductAsync(product);
         return RedirectToAction("ListTieuChuanCTL");
       }
@@ -126,6 +126,12 @@ namespace AspnetCoreMvcFull.Controllers
       ViewBag.CategoryList = new SelectList(filEditcategories, "CategoryId", "CategoryName");
       return View(product);
     }
+
+    public IActionResult ListCaoSuDun()
+    {
+      return View("~/Views/ProductCTL/ListCaoSuDun.cshtml");
+    }
+
     public async Task<IActionResult> ShowProductCvCTLById(int id)
     {
       var product = await _productCvCTLService.GetProductByIdAsync(id);
@@ -135,6 +141,7 @@ namespace AspnetCoreMvcFull.Controllers
       }
       return PartialView("~/Views/ProductCTL/ProductModalCvCTL.cshtml", product);
     }
+
     [HttpPost]
     public async Task<IActionResult> DeleteProductCVCTL(int ProductId)
     {
