@@ -34,7 +34,7 @@ namespace AspnetCoreMvcFull.Repository
         dodaycaosuketdinh3t = product.dodaycaosuketdinh3t,
 
         CategoryId = product.CategoryId,
-       
+
       };
 
       await _productLTCTLRepository.Products.AddAsync(ProductLT);
@@ -82,36 +82,36 @@ namespace AspnetCoreMvcFull.Repository
       };
     }
 
-      public async Task<IQueryable<LoiThepCTLDTO>> GetProducts(int categoryId)
-      {
-        var productLT = _productLTCTLRepository.Products
-          .Where(p => p.CategoryId == categoryId)
-          .Select(p => new LoiThepCTLDTO
-          {
-            ProductId = p.ProductId,
-            mahangctl = p.mahangctl,
-            name = p.name,
-            chieudailoithep = p.chieudailoithep,
-            khoangcach2daumoinoiloithep = p.khoangcach2daumoinoiloithep,
-            khocaosubo = p.khocaosubo,
-            khocaosuketdinh3t = p.khocaosuketdinh3t,
-            kholoithep = p.kholoithep,
-            kichthuoccuacaosudanmoinoi = p.kichthuoccuacaosudanmoinoi,
-            solink = p.solink,
-            sosoiloithep = p.sosoiloithep,
-            tocdoquan = p.tocdoquan,
-            trongluongloithepspinning = p.trongluongloithepspinning,
-            dodaycaosubo = p.dodaycaosubo,
-            dodaycaosuketdinh3t = p.dodaycaosuketdinh3t,
-            CategoryId = p.CategoryId,
-            
-          });
+    public async Task<IQueryable<LoiThepCTLDTO>> GetProducts(int categoryId)
+    {
+      var productLT = _productLTCTLRepository.Products
+        .Where(p => p.CategoryId == categoryId)
+        .Select(p => new LoiThepCTLDTO
+        {
+          ProductId = p.ProductId,
+          mahangctl = p.mahangctl,
+          name = p.name,
+          chieudailoithep = p.chieudailoithep,
+          khoangcach2daumoinoiloithep = p.khoangcach2daumoinoiloithep,
+          khocaosubo = p.khocaosubo,
+          khocaosuketdinh3t = p.khocaosuketdinh3t,
+          kholoithep = p.kholoithep,
+          kichthuoccuacaosudanmoinoi = p.kichthuoccuacaosudanmoinoi,
+          solink = p.solink,
+          sosoiloithep = p.sosoiloithep,
+          tocdoquan = p.tocdoquan,
+          trongluongloithepspinning = p.trongluongloithepspinning,
+          dodaycaosubo = p.dodaycaosubo,
+          dodaycaosuketdinh3t = p.dodaycaosuketdinh3t,
+          CategoryId = p.CategoryId,
+
+        });
       return await Task.FromResult(productLT);
-      }
+    }
 
     public async Task UpdateProductAsync(LoiThepCTLDTO loiThepCTLDTO)
     {
-    var productLT = await _productLTCTLRepository.Products.FindAsync(loiThepCTLDTO.ProductId);
+      var productLT = await _productLTCTLRepository.Products.FindAsync(loiThepCTLDTO.ProductId);
       if (productLT != null)
       {
 

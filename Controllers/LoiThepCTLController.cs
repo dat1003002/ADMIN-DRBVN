@@ -60,8 +60,8 @@ namespace AspnetCoreMvcFull.Controllers
       }
       var categories = await _productLTCTLService.GetCategories();
       var filterEditcategories = categories.Where(c => c.CategoryId == 12).ToList();
-      ViewBag.CategoryList = new SelectList(filterEditcategories, "CategoryId", "CategoryName");
-      return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml");
+      ViewBag.CategoryList = new SelectList(filterEditcategories, "CategoryId", "CategoryName", product.CategoryId);
+      return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml", product); // Truyền product vào view
     }
 
     [HttpPost]

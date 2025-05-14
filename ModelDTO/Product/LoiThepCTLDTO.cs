@@ -4,6 +4,7 @@ namespace AspnetCoreMvcFull.ModelDTO.Product
   {
     public int ProductId { get; set; }
     public string? mahangctl { get; set; }
+    public int? mahang { get; set; }
     public string? name { get; set; }
     public string? khoangcach2daumoinoiloithep { get; set; }
     public string? khocaosubo { get; set; }

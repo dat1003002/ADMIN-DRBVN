@@ -36,7 +36,7 @@ namespace AspnetCoreMvcFull.Service
     {
       return await _productLTCTLRepository.GetProductByIdAsync(productId);
     }
-    
+
     public async Task UpdateProductAsync(LoiThepCTLDTO loiThepCTLDTO)
     {
       await _productLTCTLRepository.UpdateProductAsync(loiThepCTLDTO);
