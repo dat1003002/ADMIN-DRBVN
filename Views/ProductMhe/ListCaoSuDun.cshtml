@@ -73,22 +73,27 @@
 </div>
 
 <script>
-	function deleteProduct(productId) {
-		if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
-			$.ajax({
-				url: '/ProductCSDCtrollercs/DeleteProductCSD',
-				type: 'POST',
-				data: { ProductId: productId },
-				success: function (result) {
-					alert("Sản phẩm đã được xóa thành công!");
-					location.reload();
-				},
-				error: function (xhr, status, error) {
-					alert("Có lỗi xảy ra: " + xhr.responseText);
-				}
-			});
+		function deleteProduct(productId) {
+		if (!confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+			return;
 		}
+		$.ajax({
+			url: '@Url.Action("DeleteProductLT", "LoiThepCTL")',
+			type: 'POST',
+			data: {
+				id: productId,
+				__RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+			},
+			success: function (result) {
+				alert("Sản phẩm đã được xóa thành công!");
+				location.reload();
+			},
+			error: function (xhr, status, error) {
+				alert("Có lỗi xảy ra: " + (xhr.responseText || error));
+			}
+		});
 	}
+
 	function loadProductCSD(productId) {
 		console.log("Loading product with ID: " + productId);
 		$.ajax({

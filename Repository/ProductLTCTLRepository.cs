@@ -7,21 +7,18 @@ namespace AspnetCoreMvcFull.Repository
 {
   public class ProductLTCTLRepository : IProductLTCTLRepository
   {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _productLTCTLRepository;
 
-    public ProductLTCTLRepository(ApplicationDbContext context)
+    public ProductLTCTLRepository(ApplicationDbContext productLTCTLRepository)
     {
-      _context = context ?? throw new ArgumentNullException(nameof(context));
+      _productLTCTLRepository = productLTCTLRepository;
     }
 
     public async Task CreateProductAsync(LoiThepCTLDTO product)
     {
-      if (product == null)
-        throw new ArgumentNullException(nameof(product));
-
-      var productEntity = new Product
+      var ProductLT = new Product()
       {
-        mahang = product.mahang,
+        mahangctl = product.mahangctl,
         name = product.name,
         chieudailoithep = product.chieudailoithep,
         khoangcach2daumoinoiloithep = product.khoangcach2daumoinoiloithep,
@@ -35,66 +32,64 @@ namespace AspnetCoreMvcFull.Repository
         trongluongloithepspinning = product.trongluongloithepspinning,
         dodaycaosubo = product.dodaycaosubo,
         dodaycaosuketdinh3t = product.dodaycaosuketdinh3t,
+
         CategoryId = product.CategoryId,
-        CreatedAt = DateTime.Now
+
       };
 
-      await _context.Products.AddAsync(productEntity);
-      await _context.SaveChangesAsync();
+      await _productLTCTLRepository.Products.AddAsync(ProductLT);
+      await _productLTCTLRepository.SaveChangesAsync();
     }
 
     public async Task DeleteProductAsync(int productId)
     {
-      var product = await _context.Products.FindAsync(productId);
+      var product = await _productLTCTLRepository.Products.FindAsync(productId);
       if (product != null)
       {
-        _context.Products.Remove(product);
-        await _context.SaveChangesAsync();
+        _productLTCTLRepository.Products.Remove(product);
+        await _productLTCTLRepository.SaveChangesAsync();
       }
     }
 
     public async Task<IEnumerable<Category>> GetCategories()
     {
-      return await _context.Categories.ToListAsync();
+      return await _productLTCTLRepository.Categories.ToListAsync();
     }
 
     public async Task<LoiThepCTLDTO> GetProductByIdAsync(int productId)
     {
-      var product = await _context.Products.FindAsync(productId);
-      if (product == null)
-        return null;
+      var productLT = await _productLTCTLRepository.Products.FindAsync(productId);
+      if (productLT == null) return null;
 
       return new LoiThepCTLDTO
       {
-        ProductId = product.ProductId,
-        mahang = product.mahang,
-        name = product.name,
-        chieudailoithep = product.chieudailoithep,
-        khoangcach2daumoinoiloithep = product.khoangcach2daumoinoiloithep,
-        khocaosubo = product.khocaosubo,
-        khocaosuketdinh3t = product.khocaosuketdinh3t,
-        kholoithep = product.kholoithep,
-        kichthuoccuacaosudanmoinoi = product.kichthuoccuacaosudanmoinoi,
-        solink = product.solink,
-        sosoiloithep = product.sosoiloithep,
-        tocdoquan = product.tocdoquan,
-        trongluongloithepspinning = product.trongluongloithepspinning,
-        dodaycaosubo = product.dodaycaosubo,
-        dodaycaosuketdinh3t = product.dodaycaosuketdinh3t,
-        CategoryId = product.CategoryId,
-        CreatedAt = product.CreatedAt,
-        UpdatedAt = product.UpdatedAt
+        ProductId = productLT.ProductId,
+        mahangctl = productLT.mahangctl,
+        name = productLT.name,
+        chieudailoithep = productLT.chieudailoithep,
+        khoangcach2daumoinoiloithep = productLT.khoangcach2daumoinoiloithep,
+        khocaosubo = productLT.khocaosubo,
+        khocaosuketdinh3t = productLT.khocaosuketdinh3t,
+        kholoithep = productLT.kholoithep,
+        kichthuoccuacaosudanmoinoi = productLT.kichthuoccuacaosudanmoinoi,
+        solink = productLT.solink,
+        sosoiloithep = productLT.sosoiloithep,
+        tocdoquan = productLT.tocdoquan,
+        trongluongloithepspinning = productLT.trongluongloithepspinning,
+        dodaycaosubo = productLT.dodaycaosubo,
+        dodaycaosuketdinh3t = productLT.dodaycaosuketdinh3t,
+        CategoryId = productLT.CategoryId,
       };
     }
 
     public async Task<IQueryable<LoiThepCTLDTO>> GetProducts(int categoryId)
     {
-      return await Task.FromResult(_context.Products
+      var productLT = _productLTCTLRepository.Products
         .Where(p => p.CategoryId == categoryId)
         .Select(p => new LoiThepCTLDTO
         {
           ProductId = p.ProductId,
-          mahang = p.mahang,
+          mahangctl = p.mahangctl,
           name = p.name,
           chieudailoithep = p.chieudailoithep,
           khoangcach2daumoinoiloithep = p.khoangcach2daumoinoiloithep,
@@ -109,39 +104,36 @@ namespace AspnetCoreMvcFull.Repository
           dodaycaosubo = p.dodaycaosubo,
           dodaycaosuketdinh3t = p.dodaycaosuketdinh3t,
           CategoryId = p.CategoryId,
-          CreatedAt = p.CreatedAt,
-          UpdatedAt = p.UpdatedAt
-        }));
+
+        });
+      return await Task.FromResult(productLT);
     }
 
     public async Task UpdateProductAsync(LoiThepCTLDTO loiThepCTLDTO)
     {
-      if (loiThepCTLDTO == null)
-        throw new ArgumentNullException(nameof(loiThepCTLDTO));
+      var productLT = await _productLTCTLRepository.Products.FindAsync(loiThepCTLDTO.ProductId);
+      if (productLT != null)
+      {
 
-      var product = await _context.Products.FindAsync(loiThepCTLDTO.ProductId);
-      if (product == null)
-        throw new InvalidOperationException("Product not found.");
+        productLT.mahangctl = loiThepCTLDTO.mahangctl;
+        productLT.name = loiThepCTLDTO.name;
+        productLT.chieudailoithep = loiThepCTLDTO.chieudailoithep;
+        productLT.khoangcach2daumoinoiloithep = loiThepCTLDTO.khoangcach2daumoinoiloithep;
+        productLT.khocaosubo = loiThepCTLDTO.khocaosubo;
+        productLT.khocaosuketdinh3t = loiThepCTLDTO.khocaosuketdinh3t;
+        productLT.kholoithep = loiThepCTLDTO.kholoithep;
+        productLT.kichthuoccuacaosudanmoinoi = loiThepCTLDTO.kichthuoccuacaosudanmoinoi;
+        productLT.solink = loiThepCTLDTO.solink;
+        productLT.sosoiloithep = loiThepCTLDTO.sosoiloithep;
+        productLT.tocdoquan = loiThepCTLDTO.tocdoquan;
+        productLT.trongluongloithepspinning = loiThepCTLDTO.trongluongloithepspinning;
+        productLT.dodaycaosubo = loiThepCTLDTO.dodaycaosubo;
+        productLT.dodaycaosuketdinh3t = loiThepCTLDTO.dodaycaosuketdinh3t;
+        productLT.CategoryId = loiThepCTLDTO.CategoryId;
+        productLT.UpdatedAt = DateTime.Now;
 
-      product.mahang = loiThepCTLDTO.mahang;
-      product.name = loiThepCTLDTO.name;
-      product.chieudailoithep = loiThepCTLDTO.chieudailoithep;
-      product.khoangcach2daumoinoiloithep = loiThepCTLDTO.khoangcach2daumoinoiloithep;
-      product.khocaosubo = loiThepCTLDTO.khocaosubo;
-      product.khocaosuketdinh3t = loiThepCTLDTO.khocaosuketdinh3t;
-      product.kholoithep = loiThepCTLDTO.kholoithep;
-      product.kichthuoccuacaosudanmoinoi = loiThepCTLDTO.kichthuoccuacaosudanmoinoi;
-      product.solink = loiThepCTLDTO.solink;
-      product.sosoiloithep = loiThepCTLDTO.sosoiloithep;
-      product.tocdoquan = loiThepCTLDTO.tocdoquan;
-      product.trongluongloithepspinning = loiThepCTLDTO.trongluongloithepspinning;
-      product.dodaycaosubo = loiThepCTLDTO.dodaycaosubo;
-      product.dodaycaosuketdinh3t = loiThepCTLDTO.dodaycaosuketdinh3t;
-      product.CategoryId = loiThepCTLDTO.CategoryId;
-      product.UpdatedAt = DateTime.Now;
-
-      _context.Products.Update(product);
-      await _context.SaveChangesAsync();
+        await _productLTCTLRepository.SaveChangesAsync();
+      }
     }
   }
 }

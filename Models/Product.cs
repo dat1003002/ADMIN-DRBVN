@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace AspnetCoreMvcFull.Models
 {
   public class Product
   {
     public int ProductId { get; set; }
     public int? mahang { get; set; }
+    public string? mahangctl { get; set; }
     public string? name { get; set; }
     public string? image { get; set; }
     public string? quycachloithep { get; set; }
@@ -18,7 +21,7 @@ namespace AspnetCoreMvcFull.Models
     public string? doday2 { get; set; }
     public string? soi1 { get; set; }
     public string? soi2 { get; set; }
-    public string? sodaycatduoc { get; set; }
+    public string? sodaycatduoc { get; set; } 
     public string? chieudaicatlon { get; set; }
     public string? chieudaicatnho { get; set; }
     public string? tocdomaydun { get; set; }

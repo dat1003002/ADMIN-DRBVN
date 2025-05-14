@@ -15,152 +15,75 @@ namespace AspnetCoreMvcFull.Controllers
   public class LoiThepCTLController : Controller
   {
     private readonly IProductLTCTLService _productLTCTLService;
-    private readonly ILogger<LoiThepCTLController> _logger;
-    private const int DefaultCategoryId = 12;
-    private const int PageSize = 10;
 
-    public LoiThepCTLController(IProductLTCTLService productLTCTLService, ILogger<LoiThepCTLController> logger)
+    public LoiThepCTLController(IProductLTCTLService productLTCTLService)
     {
-      _productLTCTLService = productLTCTLService ?? throw new ArgumentNullException(nameof(productLTCTLService));
-      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+      _productLTCTLService = productLTCTLService;
     }
-
-    public IActionResult Index()
+    public async Task<IActionResult> ListLoiThepCTL()
     {
-      return View();
-    }
-
-    public async Task<IActionResult> ListLoiThepCTL(int page = 1)
-    {
-      try
-      {
-        var products = await _productLTCTLService.GetProducts(DefaultCategoryId) ?? new List<LoiThepCTLDTO>();
-        var pagedList = products.ToPagedList(page, PageSize);
-        return View("~/Views/ProductCTL/ListLoiThepCTL.cshtml", pagedList);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error retrieving product list for category {CategoryId}", DefaultCategoryId);
-        TempData["ErrorMessage"] = "An error occurred while loading the product list.";
-        return View("~/Views/ProductCTL/ListLoiThepCTL.cshtml", new List<LoiThepCTLDTO>().ToPagedList(page, PageSize));
-      }
+      int categoryId = 12;
+      var products = await _productLTCTLService.GetProducts(categoryId);
+      return View("~/Views/ProductCTL/ListLoiThepCTL.cshtml", products);
     }
 
     public async Task<IActionResult> CreateProductLT()
     {
-      try
-      {
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml", new LoiThepCTLDTO());
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error loading create product form");
-        TempData["ErrorMessage"] = "An error occurred while loading the create product form.";
-        return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml", new LoiThepCTLDTO());
-      }
+      var categories = await _productLTCTLService.GetCategories();
+      var filtercategories = categories.Where(c => c.CategoryId == 12).ToList();
+      ViewBag.CategoryList = new SelectList(filtercategories, "CategoryId", "CategoryName");
+      return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml");
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateProductLT(LoiThepCTLDTO product)
     {
-      if (product == null)
-      {
-        TempData["ErrorMessage"] = "Invalid data.";
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml", new LoiThepCTLDTO());
-      }
-
-      if (product.CategoryId != DefaultCategoryId)
-      {
-        ModelState.AddModelError("CategoryId", "Please select a valid category.");
-      }
-
-      if (!ModelState.IsValid)
-      {
-        TempData["ErrorMessage"] = "Please check the input data.";
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml", product);
-      }
-
-      try
+      if (ModelState.IsValid)
       {
         await _productLTCTLService.CreateProductAsync(product);
-        TempData["SuccessMessage"] = "Product added successfully!";
-        return RedirectToAction(nameof(ListLoiThepCTL));
+        return RedirectToAction("ListLoiThepCTL");
       }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error creating product: {ProductName}", product.name);
-        TempData["ErrorMessage"] = "An error occurred while saving the product.";
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml", product);
-      }
-    }
 
+      // Nếu ModelState không hợp lệ, trả về view với lỗi
+      var categories = await _productLTCTLService.GetCategories();
+      var filtercategories = categories.Where(c => c.CategoryId == 12).ToList();
+      ViewBag.CategoryList = new SelectList(filtercategories, "CategoryId", "CategoryName");
+      return View("~/Views/ProductCTL/CreateLoiThepCTL.cshtml", product);
+    }
     public async Task<IActionResult> EditProductLT(int id)
     {
-      try
+      var product = await _productLTCTLService.GetProductByIdAsync(id);
+      if (product == null)
       {
-        var product = await _productLTCTLService.GetProductByIdAsync(id);
-        if (product == null)
-        {
-          return NotFound();
-        }
-
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml", product);
+        return NotFound();
       }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error loading edit product form for ID {ProductId}", id);
-        TempData["ErrorMessage"] = "An error occurred while loading the edit form.";
-        return RedirectToAction(nameof(ListLoiThepCTL));
-      }
+      var categories = await _productLTCTLService.GetCategories();
+      var filterEditcategories = categories.Where(c => c.CategoryId == 12).ToList();
+      ViewBag.CategoryList = new SelectList(filterEditcategories, "CategoryId", "CategoryName", product.CategoryId);
+      return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml", product); // Truyền product vào view
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditProductLT(LoiThepCTLDTO product)
     {
-      if (product == null)
-      {
-        TempData["ErrorMessage"] = "Invalid data.";
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml", new LoiThepCTLDTO());
-      }
-
-      if (product.CategoryId != DefaultCategoryId)
-      {
-        ModelState.AddModelError("CategoryId", "Please select a valid category.");
-      }
-
-      if (!ModelState.IsValid)
-      {
-        TempData["ErrorMessage"] = "Please check the input data.";
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml", product);
-      }
-
       try
       {
         await _productLTCTLService.UpdateProductAsync(product);
-        TempData["SuccessMessage"] = "Product updated successfully!";
         return RedirectToAction(nameof(ListLoiThepCTL));
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "Error updating product ID {ProductId}", product.ProductId);
-        TempData["ErrorMessage"] = "An error occurred while updating the product.";
-        await PopulateCategoriesAsync();
-        return View("~/Views/ProductCTL/EditLoiThepCTL.cshtml", product);
+        ModelState.AddModelError("", "Có Lỗi xảy ra khi cập nhật");
       }
+      var categories = await _productLTCTLService.GetCategories();
+      ViewBag.CategoryList = new SelectList(categories, "CategoryId", "CategoryName", product.CategoryId);
+      return View(product);
     }
 
     public async Task<IActionResult> ShowProductLTById(int id)
     {
-      try
       {
         var product = await _productLTCTLService.GetProductByIdAsync(id);
         if (product == null)
@@ -169,48 +92,30 @@ namespace AspnetCoreMvcFull.Controllers
         }
         return PartialView("~/Views/ProductCTL/ShowProductLTCTL.cshtml", product);
       }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error displaying product details for ID {ProductId}", id);
-        return StatusCode(500, "An error occurred while displaying product details.");
-      }
     }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteProductLT(int id)
     {
+      if (id <= 0)
+      {
+        return Json(new { success = false, message = "ID sản phẩm không hợp lệ." });
+      }
+
       try
       {
         var product = await _productLTCTLService.GetProductByIdAsync(id);
         if (product == null)
         {
-          return Json(new { success = false, message = "Product not found." });
+          return Json(new { success = false, message = "Sản phẩm không tồn tại." });
         }
 
         await _productLTCTLService.DeleteProductAsync(id);
-        return Json(new { success = true, message = "Product deleted successfully!" });
+        return Json(new { success = true, message = "Xóa sản phẩm thành công." });
       }
       catch (Exception ex)
       {
-        _logger.LogError(ex, "Error deleting product ID {ProductId}", id);
-        return Json(new { success = false, message = "An error occurred while deleting the product." });
-      }
-    }
-
-    private async Task PopulateCategoriesAsync()
-    {
-      try
-      {
-        var categories = await _productLTCTLService.GetCategories() ?? new List<Category>();
-        var filteredCategories = categories.Where(c => c.CategoryId == DefaultCategoryId).ToList();
-        ViewBag.CategoryList = new SelectList(filteredCategories, "CategoryId", "CategoryName");
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error retrieving category list");
-        ViewBag.CategoryList = new SelectList(new List<Category>(), "CategoryId", "CategoryName");
-        TempData["ErrorMessage"] = "Unable to load category list.";
+        return Json(new { success = false, message = $"Lỗi khi xóa sản phẩm: {ex.Message}" });
       }
     }
   }
