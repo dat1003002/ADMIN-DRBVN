@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace AspnetCoreMvcFull.Models
 {
   public class Product
   {
     public int ProductId { get; set; }
     public int? mahang { get; set; }
+    public string? mahangctl { get; set; }
     public string? name { get; set; }
     public string? image {  get; set; }
     public string? quycachloithep { get; set; }
@@ -16,8 +19,10 @@ namespace AspnetCoreMvcFull.Models
     public string? doday {  get; set; }
     public string? soi1 { get; set; }
     public string? soi2 { get; set; }
-    public string? sodaycatduoc { get; set; }
-    public string? chieudaicatlon {  get; set; }
+
+    public string? sodaycatduoc { get; set; } 
+    public string? chieudaicatlon { get; set; }
+
     public string? chieudaicatnho { get; set; }
     public  string? tocdomaydun {  get; set; }
     public string? tocdokeo { get; set; }
@@ -46,6 +51,18 @@ namespace AspnetCoreMvcFull.Models
     public DateTime? UpdatedAt { get; set; }
     public int CategoryId { get; set; }
     public Category Category { get; set; }
+    public string? chieudailoithep { get; set; }
+    public string? khoangcach2daumoinoiloithep { get; set; }
+    public string? khocaosubo { get; set; }
+    public string? khocaosuketdinh3t { get; set; }
+    public string? kholoithep { get; set; }
+    public string? kichthuoccuacaosudanmoinoi { get; set; }
+    public string? solink { get; set; }
+    public string? sosoiloithep { get; set; }
+    public string? tocdoquan { get; set; }
+    public string? trongluongloithepspinning { get; set; }
+    public string? dodaycaosubo { get; set; }
+    public string? dodaycaosuketdinh3t { get; set; }
 
   }
 }

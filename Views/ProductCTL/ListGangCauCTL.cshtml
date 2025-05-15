@@ -93,39 +93,35 @@
 	</div>
 </div>
 	<script>
-		function deleteProduct(productId) {
-			if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
-				$.ajax({
-					url: '@Url.Action("DeleteKhoDH", "DonghangController")',
-					type: 'POST',
-					data: { ProductId: productId },
-					success: function (result) {
-						if (result.success) {
-							alert(result.message);
-							location.reload();
-						} else {
-							alert("Xóa không thành công!");
-						}
-					},
-					error: function (xhr, status, error) {
-						alert("Có lỗi xảy ra: " + xhr.responseText);
-					}
-				});
-			}
-		}
-
-		function showProductDetails(productId) {
+			function deleteGCCTL(productId) {
+		if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
 			$.ajax({
-				url: '@Url.Action("showProductKhoDH", "DonghangController")',
-				type: 'GET',
-				data: { id: productId },
-				success: function (data) {
-					$('#modalBody').html(data);
-					$('#modalScrollable').modal('show');
+				url: '@Url.Action("DeleteProductGCCTL", "GangCauCTLCotroller")',
+				type: 'POST',
+				data: { ProductId: productId },
+				success: function (result) {
+					alert("Xóa sản phẩm thành công!");
+					location.reload();
 				},
-				error: function () {
-					alert('Có lỗi xảy ra khi tải dữ liệu sản phẩm.');
+				error: function (xhr, status, error) {
+					alert("Có lỗi xảy ra: " + xhr.responseText);
 				}
 			});
 		}
+	}
+
+			function modalGCCTL(productId) {
+		$.ajax({
+			url: '@Url.Action("showProductGC", "GangCauCTLCotroller")',
+			type: 'GET',
+			data: { id: productId },
+			success: function (data) {
+				$('#modalBody').html(data);
+				$('#modalScrollable').modal('show');
+			},
+			error: function () {
+				alert('Có lỗi xảy ra khi tải dữ liệu sản phẩm.');
+			}
+		});
+	}
 	</script>

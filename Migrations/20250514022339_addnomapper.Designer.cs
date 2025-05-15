@@ -4,6 +4,7 @@ using AspnetCoreMvcFull.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspnetCoreMvcFull.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250514022339_addnomapper")]
+    partial class addnomapper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +85,6 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<string>("chieudaicatnho")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("chieudailoithep")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("chieudaithanchinhbemat")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,11 +148,17 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<string>("kichthuoccuacaosudanmoinoi")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("loaicaosu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("loaicaosu1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("loaicaosu2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("mahang")
                         .HasColumnType("int");
-
-                    b.Property<string>("mahangctl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("may")
                         .HasColumnType("nvarchar(max)");

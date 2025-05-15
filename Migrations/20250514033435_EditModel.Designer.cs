@@ -4,6 +4,7 @@ using AspnetCoreMvcFull.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspnetCoreMvcFull.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250514033435_EditModel")]
+    partial class EditModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,9 +153,6 @@ namespace AspnetCoreMvcFull.Migrations
 
                     b.Property<int?>("mahang")
                         .HasColumnType("int");
-
-                    b.Property<string>("mahangctl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("may")
                         .HasColumnType("nvarchar(max)");
