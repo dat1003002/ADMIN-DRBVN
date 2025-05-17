@@ -70,10 +70,22 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("aplucdaudunloithep")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("caosubemat")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("caosubo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("caosuketdinh")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("caosuloplot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("caosur514")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("chieudai")
@@ -139,6 +151,9 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<string>("kho2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("khoangcach2daumoinoibo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("khoangcach2daumoinoiloithep")
                         .HasColumnType("nvarchar(max)");
 
@@ -190,6 +205,12 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<string>("loaikhuondun2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("loithepsaukhidun")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("loitheptruockhidun")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("mahang")
                         .HasColumnType("int");
 
@@ -200,6 +221,12 @@ namespace AspnetCoreMvcFull.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nhietdodaumaydun")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nhietdotrucxoan")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("pitch")
@@ -238,6 +265,15 @@ namespace AspnetCoreMvcFull.Migrations
                     b.Property<string>("tieuchuan")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("tocdocolingdrum")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tocdodun")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tocdoduncaosu")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("tocdokeo")
                         .HasColumnType("nvarchar(max)");
 
@@ -254,6 +290,9 @@ namespace AspnetCoreMvcFull.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("tocdoquan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("trongluogtest")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("trongluong")
