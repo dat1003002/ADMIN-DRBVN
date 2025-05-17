@@ -1,21 +1,18 @@
-@model X.PagedList.IPagedList<AspnetCoreMvcFull.ModelDTO.Product.QuyCachCaoSuCTLDTO>
-@using X.PagedList.Mvc.Core
-@using X.PagedList
-
+@model IEnumerable<AspnetCoreMvcFull.ModelDTO.Product.QuyCachCaoSuCTLDTO>
 @{
   ViewData["Title"] = "Danh Sách Tiêu Chuẩn Cao Su Đùn";
 }
 
-<div class="nav-align-top">
+<div class="nav-align-top mb-1">
   <ul class="nav nav-pills flex-column flex-md-row mb-6">
-    <li class="nav-item">
-      <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "ListCaoSuCTL" ? "active" : "")"
-         asp-controller="CaoSuCTLController" asp-action="ListCaoSuCTL">Bảng Hướng Dẫn Công Việc</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "ListQuyCachCSDCTL" ? "active" : "")"
-         asp-controller="QuyCachCaoSuCTL" asp-action="ListQuyCachCSDCTL">Tiêu chuẩn đùn cao su</a>
-    </li>
+		<li class="nav-item">
+			<a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "ListCaoSuCTL" ? "active" : "")"
+			   asp-controller="CaoSuCTLCotroller" asp-action="ListCaoSuCTL">Bảng Hướng Dẫn Công Việc</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "ListQuyCachCSDCTL" ? "active" : "")"
+			   asp-controller="QuyCachCaoSuCTL" asp-action="ListQuyCachCSDCTL">Tiêu chuẩn đùn Cao Su</a>
+		</li>
   </ul>
 </div>
 
@@ -45,7 +42,7 @@
           foreach (var product in Model)
           {
             <tr id="row-@product.ProductId">
-              <td>@product.mahang</td>
+              <td>@product.mahangctl</td>
               <td>@product.name</td>
               <td>@product.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
               <td>

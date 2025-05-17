@@ -3,7 +3,7 @@ namespace AspnetCoreMvcFull.ModelDTO.Product
   public class QuyCachCaoSuCTLDTO
   {
     public int ProductId { get; set; }
-    public int? mahang { get; set; }
+    public string? mahangctl { get; set; }
     public string? name { get; set; }
     public string? loaicaosu { get; set; }
     public string? loaicaosu1 { get; set; }
