@@ -18,7 +18,6 @@ namespace AspnetCoreMvcFull.Repository
       _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    // Create a new product with all fields from QuyCachCaoSuCTLDTO
     public async Task CreateProductAsync(QuyCachCaoSuCTLDTO product)
     {
       if (product == null)
@@ -49,6 +48,15 @@ namespace AspnetCoreMvcFull.Repository
         trongluong = product.trongluong,
         trongluong1 = product.trongluong1,
         trongluong2 = product.trongluong2,
+
+        // BỔ SUNG 6 TRƯỜNG MỚI
+        screw = product.screw,
+        throat = product.throat,
+        cylinder1 = product.cylinder1,
+        cylinder2 = product.cylinder2,
+        head = product.head,
+        nuoclammat = product.nuoclammat,
+
         CreatedAt = DateTime.Now,
         CategoryId = product.CategoryId
       };
@@ -57,7 +65,6 @@ namespace AspnetCoreMvcFull.Repository
       await _context.SaveChangesAsync();
     }
 
-    // Delete a product by ID
     public async Task DeleteProductAsync(int productId)
     {
       var product = await _context.Products.FindAsync(productId);
@@ -68,13 +75,11 @@ namespace AspnetCoreMvcFull.Repository
       }
     }
 
-    // Get all categories
     public async Task<IEnumerable<Category>> GetCategories()
     {
       return await _context.Categories.ToListAsync();
     }
 
-    // Get a product by ID with all fields
     public async Task<QuyCachCaoSuCTLDTO> GetProductByIdAsync(int productId)
     {
       var product = await _context.Products.FindAsync(productId);
@@ -107,50 +112,66 @@ namespace AspnetCoreMvcFull.Repository
         trongluong = product.trongluong,
         trongluong1 = product.trongluong1,
         trongluong2 = product.trongluong2,
+
+        // BỔ SUNG 6 TRƯỜNG MỚI
+        screw = product.screw,
+        throat = product.throat,
+        cylinder1 = product.cylinder1,
+        cylinder2 = product.cylinder2,
+        head = product.head,
+        nuoclammat = product.nuoclammat,
+
         CreatedAt = product.CreatedAt,
         UpdatedAt = product.UpdatedAt,
         CategoryId = product.CategoryId
       };
     }
 
-    // Get products by category ID with all fields
     public async Task<IQueryable<QuyCachCaoSuCTLDTO>> GetProducts(int categoryId)
     {
       return await Task.FromResult(_context.Products
-        .Where(p => p.CategoryId == categoryId)
-        .Select(p => new QuyCachCaoSuCTLDTO
-        {
-          ProductId = p.ProductId,
-          mahangctl = p.mahangctl,
-          name = p.name,
-          loaicaosu = p.loaicaosu,
-          loaicaosu1 = p.loaicaosu1,
-          loaicaosu2 = p.loaicaosu2,
-          loaikhuondun = p.loaikhuondun,
-          loaikhuondun1 = p.loaikhuondun1,
-          loaikhuondun2 = p.loaikhuondun2,
-          tocdomotor = p.tocdomotor,
-          tocdomotor1 = p.tocdomotor1,
-          tocdomotor2 = p.tocdomotor2,
-          chieudai = p.chieudai,
-          chieudai1 = p.chieudai1,
-          chieudai2 = p.chieudai2,
-          kho = p.kho,
-          kho1 = p.kho1,
-          kho2 = p.kho2,
-          doday = p.doday,
-          doday1 = p.doday1,
-          doday2 = p.doday2,
-          trongluong = p.trongluong,
-          trongluong1 = p.trongluong1,
-          trongluong2 = p.trongluong2,
-          CreatedAt = p.CreatedAt,
-          UpdatedAt = p.UpdatedAt,
-          CategoryId = p.CategoryId
-        }));
+          .Where(p => p.CategoryId == categoryId)
+          .Select(p => new QuyCachCaoSuCTLDTO
+          {
+            ProductId = p.ProductId,
+            mahangctl = p.mahangctl,
+            name = p.name,
+            loaicaosu = p.loaicaosu,
+            loaicaosu1 = p.loaicaosu1,
+            loaicaosu2 = p.loaicaosu2,
+            loaikhuondun = p.loaikhuondun,
+            loaikhuondun1 = p.loaikhuondun1,
+            loaikhuondun2 = p.loaikhuondun2,
+            tocdomotor = p.tocdomotor,
+            tocdomotor1 = p.tocdomotor1,
+            tocdomotor2 = p.tocdomotor2,
+            chieudai = p.chieudai,
+            chieudai1 = p.chieudai1,
+            chieudai2 = p.chieudai2,
+            kho = p.kho,
+            kho1 = p.kho1,
+            kho2 = p.kho2,
+            doday = p.doday,
+            doday1 = p.doday1,
+            doday2 = p.doday2,
+            trongluong = p.trongluong,
+            trongluong1 = p.trongluong1,
+            trongluong2 = p.trongluong2,
+
+            // BỔ SUNG 6 TRƯỜNG MỚI
+            screw = p.screw,
+            throat = p.throat,
+            cylinder1 = p.cylinder1,
+            cylinder2 = p.cylinder2,
+            head = p.head,
+            nuoclammat = p.nuoclammat,
+
+            CreatedAt = p.CreatedAt,
+            UpdatedAt = p.UpdatedAt,
+            CategoryId = p.CategoryId
+          }));
     }
 
-    // Update a product with all fields
     public async Task UpdateProductAsync(QuyCachCaoSuCTLDTO quyCachCaoSuCTLDTO)
     {
       if (quyCachCaoSuCTLDTO == null)
@@ -183,6 +204,15 @@ namespace AspnetCoreMvcFull.Repository
       product.trongluong = quyCachCaoSuCTLDTO.trongluong;
       product.trongluong1 = quyCachCaoSuCTLDTO.trongluong1;
       product.trongluong2 = quyCachCaoSuCTLDTO.trongluong2;
+
+      // BỔ SUNG 6 TRƯỜNG MỚI
+      product.screw = quyCachCaoSuCTLDTO.screw;
+      product.throat = quyCachCaoSuCTLDTO.throat;
+      product.cylinder1 = quyCachCaoSuCTLDTO.cylinder1;
+      product.cylinder2 = quyCachCaoSuCTLDTO.cylinder2;
+      product.head = quyCachCaoSuCTLDTO.head;
+      product.nuoclammat = quyCachCaoSuCTLDTO.nuoclammat;
+
       product.CategoryId = quyCachCaoSuCTLDTO.CategoryId;
       product.UpdatedAt = DateTime.Now;
 

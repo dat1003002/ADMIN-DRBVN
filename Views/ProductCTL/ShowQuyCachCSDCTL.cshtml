@@ -1,7 +1,7 @@
 @model AspnetCoreMvcFull.ModelDTO.Product.QuyCachCaoSuCTLDTO
 
 <!-- Table 1 (Đã chỉnh sửa width và căn giữa) -->
-<table class="table table-bordered" style="width: 100%; border-collapse: collapse; padding:15px; text-align:center; margin: 0 auto;">
+<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin: 0 auto;">
 	<thead>
 		<tr style="background:#E7E6E6;">
 			<th style="border: 1px solid black; width:25%; color: black; font-weight:700;">Mã Sản Phẩm</th>
@@ -15,9 +15,32 @@
 		</tr>
 	</tbody>
 </table>
+<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; table-layout: fixed;">
+	<thead>
+		<tr style="background:#E7E6E6;">
+			<th style="border: 1px solid black; color: black; font-weight:700;">T° Screw</th>
+			<th style="border: 1px solid black; color: black; font-weight:700;">T° Throat</th>
+			<th style="border: 1px solid black; color: black; font-weight:700;">T° Cylinder #1</th>
+			<th style="border: 1px solid black; color: black; font-weight:700;">T° Cylinder #2</th>
+			<th style="border: 1px solid black; color: black; font-weight:700;">T° Head</th>
+			<th style="border: 1px solid black; color: black; font-weight:700;">T° Nước làm mát</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="background:white;">
+			<td style="border: 1px solid black; color:#3F51B5; font-weight:700; font-size:21px;">@Model.screw</td>
+			<td style="border: 1px solid black; color:#3F51B5; font-weight:700; font-size:21px;">@Model.throat</td>
+			<td style="border: 1px solid black; color:#3F51B5; font-weight:700; font-size:21px;">@Model.cylinder1</td>
+			<td style="border: 1px solid black; color:#3F51B5; font-weight:700; font-size:21px;">@Model.cylinder2</td>
+			<td style="border: 1px solid black; color:#3F51B5; font-weight:700; font-size:21px;">@Model.head</td>
+			<td style="border: 1px solid black; color:#3F51B5; font-weight:700; font-size:21px;">@Model.nuoclammat</td>
+		</tr>
+	</tbody>
+</table>
+
 
 <!-- Table 3 (Giữ nguyên) -->
-<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin-top:20px;">
+<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin-top:10px;">
 	<thead>
 		<tr style="background:#E7E6E6;">
 			<th style="border: 1px solid black; width:13%; color: black; font-weight:700;">Loại Cao Su</th>
@@ -43,7 +66,7 @@
 </table>
 
 <!-- Table 4 (Giữ nguyên) -->
-<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin-top:20px;">
+<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin-top:10px;">
 	<thead>
 		<tr style="background:#E7E6E6;">
 			<th style="border: 1px solid black; width:13%; color: black; font-weight:700;">Loại Cao Su</th>
@@ -69,7 +92,7 @@
 </table>
 
 <!-- Table 5 (Giữ nguyên) -->
-<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin-top:20px;">
+<table class="table table-bordered" style="width: 100%; border-collapse: collapse; text-align:center; margin-top:10px;">
 	<thead>
 		<tr style="background:#E7E6E6;">
 			<th style="border: 1px solid black; width:13%; color: black; font-weight:700;">Loại Cao Su</th>

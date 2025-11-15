@@ -26,6 +26,12 @@ namespace AspnetCoreMvcFull.ModelDTO.Product
     public string? trongluong { get; set; }
     public string? trongluong1 { get; set; }
     public string? trongluong2 { get; set; }
+    public string? screw { get; set; }
+    public string? throat { get; set; }
+    public string? cylinder1 { get; set; }
+    public string? cylinder2 { get; set; }
+    public string? head { get; set; }
+    public string? nuoclammat { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; }
     public int CategoryId { get; set; }
