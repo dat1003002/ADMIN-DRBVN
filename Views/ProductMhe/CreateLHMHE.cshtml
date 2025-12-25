@@ -1,0 +1,54 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.LuuHoaMHEDTO
+@{
+    ViewData["Title"] = "Thành Hình & Lưu Hóa MHE";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Tạo Mới Thành Hình & Lưu Hóa</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateLHMHE" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="name">
+                                Tên Tiêu Chuẩn <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" asp-for="name" class="form-control" placeholder="Nhập tên tiêu chuẩn" required />
+                                <span asp-validation-for="name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Ảnh Tiêu Chuẩn (Upload trực tiếp)</label>
+                            <div class="col-sm-8">
+                                <input type="file" asp-for="imageFile" class="form-control" accept="image/*" />
+                                <span asp-validation-for="imageFile" class="text-danger"></span>
+                                <small class="text-muted">Upload trực tiếp file ảnh (JPG, PNG, GIF, BMP).</small>
+                            </div>
+                        </div>
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label text-primary fw-bold">
+								Upload PDF 
+							</label>
+							<div class="col-sm-8">
+								<input type="file" name="PdfFile" accept=".pdf" class="form-control" />
+								<small class="text-muted">
+									Hệ thống sẽ tự động chuyển trang đầu tiên của PDF thành ảnh PNG chất lượng cao (300 DPI).
+								</small>
+							</div>
+						</div>
+                        <input type="hidden" asp-for="CategoryId" value="15" />
+                        <div class="row justify-content-end">
+                            <div class="col-sm-12 text-end">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

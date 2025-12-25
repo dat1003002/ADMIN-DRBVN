@@ -1,0 +1,88 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.BangTaiDTO
+
+@if (Model != null)
+{
+	@if (Model.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
+	{
+		<div id="productCarousel" class="carousel slide" data-bs-touch="true" data-bs-interval="false">
+			<div class="carousel-indicators">
+				@for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+				{
+					<button type="button"
+							data-bs-target="#productCarousel"
+							data-bs-slide-to="@i"
+							class="@(i == 0 ? "active" : "")"
+							aria-current="@(i == 0 ? "true" : "false")"
+							aria-label="Slide @(i + 1)"></button>
+				}
+			</div>
+			<div class="carousel-inner">
+				@for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+				{
+					<div class="carousel-item @(i == 0 ? "active" : "")">
+						<img src="@Url.Content(Model.ExistingImagePaths[i])"
+							 class="d-block w-100 clickable-image"
+							 style="cursor: pointer;"
+							 alt="@Model.Name - Ảnh @(i + 1)" />
+					</div>
+				}
+			</div>
+			<style>
+				#productCarousel .carousel-control-prev,
+				#productCarousel .carousel-control-next {
+					display: none !important;
+				}
+			</style>
+		</div>
+	}
+	else
+	{
+		<img src="~/public/products/no-image.jpg" alt="No Image" style="width:100%;" />
+	}
+
+	<!-- Script sửa lỗi: re-initialize carousel mỗi khi PartialView được load (thường trong modal) -->
+	<script>
+		// Hàm khởi tạo carousel và gắn các event (click + swipe)
+		function initializeProductCarousel() {
+			const carouselElement = document.getElementById('productCarousel');
+			if (!carouselElement) return;
+
+			// Khởi tạo lại instance Bootstrap Carousel
+			const carousel = bootstrap.Carousel.getOrCreateInstance(carouselElement);
+
+			// Gắn sự kiện click vào ảnh → chuyển sang ảnh tiếp theo
+			carouselElement.querySelectorAll('.clickable-image').forEach(img => {
+				img.onclick = () => carousel.next();
+			});
+
+			// Gắn sự kiện vuốt cảm ứng
+			let touchStartX = 0;
+			let touchEndX = 0;
+
+			carouselElement.addEventListener('touchstart', e => {
+				touchStartX = e.changedTouches[0].screenX;
+			}, { passive: true });
+
+			carouselElement.addEventListener('touchend', e => {
+				touchEndX = e.changedTouches[0].screenX;
+				const diff = touchStartX - touchEndX;
+				const threshold = 50;
+				if (Math.abs(diff) > threshold) {
+					if (diff > 0) {
+						carousel.next(); // Vuốt trái → next
+					} else {
+						carousel.prev(); // Vuốt phải → prev
+					}
+				}
+			}, { passive: true });
+		}
+
+		// Chạy khởi tạo ngay lập tức khi PartialView được render lần đầu
+		initializeProductCarousel();
+
+		const modalElement = document.querySelector('.modal');
+		if (modalElement) {
+			modalElement.addEventListener('shown.bs.modal', initializeProductCarousel);
+		}
+	</script>
+}
