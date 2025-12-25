@@ -1,0 +1,73 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.LuuHoaMHEDTO
+
+@{
+	ViewData["Title"] = "Chỉnh Sửa Thành Hình & Lưu Hóa MHE";
+}
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card mb-4">
+				<div class="card-header">
+					<h5 class="mb-0">Chỉnh Sửa Thành Hình & Lưu Hóa MHE</h5>
+				</div>
+				<div class="card-body">
+					<form asp-action="EditLHMHE" method="post" enctype="multipart/form-data">
+						@Html.AntiForgeryToken()
+
+						<input type="hidden" asp-for="ProductId" />
+						<input type="hidden" asp-for="CategoryId" value="15" />
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Tên Tiêu Chuẩn <span class="text-danger">*</span></label>
+							<div class="col-sm-8">
+								<input type="text" asp-for="name" class="form-control" required />
+								<span asp-validation-for="name" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Ảnh hiện tại</label>
+							<div class="col-sm-8">
+								@if (!string.IsNullOrEmpty(Model.image))
+								{
+									<img src="~/images/@Model.image" alt="Ảnh hiện tại" class="img-thumbnail" style="max-height: 300px;" />
+									<p class="text-muted mt-2">Tên file: @Model.image</p>
+								}
+								else
+								{
+									<p class="text-muted">Chưa có ảnh</p>
+								}
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Upload ảnh mới (thay thế)</label>
+							<div class="col-sm-8">
+								<input type="file" asp-for="imageFile" class="form-control" accept="image/*" />
+								<small class="text-muted">JPG, PNG, GIF, BMP</small>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label text-primary fw-bold">Upload PDF mới (thay thế)</label>
+							<div class="col-sm-8">
+								<input type="file" name="PdfFile" accept=".pdf" class="form-control" />
+								<small class="text-muted">
+									Hệ thống sẽ chuyển trang đầu PDF thành ảnh PNG chất lượng cao (300 DPI) để thay thế ảnh cũ.
+								</small>
+							</div>
+						</div>
+
+						<div class="row justify-content-end">
+							<div class="col-sm-12 text-end">
+								<button type="submit" class="btn btn-primary">Cập Nhật</button>
+								<a asp-action="ListLuuhoa" class="btn btn-secondary ms-2">Hủy</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

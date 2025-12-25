@@ -1,0 +1,138 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.BangTaiDTO
+@{
+    ViewData["Title"] = "Chỉnh Sửa Băng Tải Thành Hình";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <div class="card shadow">
+                <div class="card-header text-white">
+                    <h5 class="mb-0">Chỉnh Sửa Bảng Hướng Dẫn Công Việc</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data" id="editForm">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="ProductId" />
+                        <input type="hidden" asp-for="CategoryId" />
+
+                        <div class="row mb-3">
+                            <label asp-for="Name" class="col-sm-3 col-form-label fw-bold">Tên Băng Tải</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Ảnh hiện có -->
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">
+                                Ảnh hiện có
+                                <span class="badge bg-secondary ms-2">@(Model.ExistingImagePaths?.Count ?? 0)</span>
+                            </label>
+                            <div class="col-sm-9">
+                                @if (Model.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
+                                {
+                                    <div class="row g-3" id="imageContainer">
+                                        @for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+                                        {
+                                            var path = Model.ExistingImagePaths[i];
+                                            <div class="col-md-4 position-relative image-item">
+                                                <img src="@path"
+                                                     class="img-thumbnail enlarge-image"
+                                                     style="height: 220px; width: 100%; object-fit: cover; cursor: zoom-in;"
+                                                     alt="Ảnh sản phẩm"
+                                                     data-bs-toggle="modal"
+                                                     data-bs-target="#imageModal" />
+                                                <div class="position-absolute top-0 end-0 p-2 bg-dark bg-opacity-75 rounded">
+                                                    <input type="checkbox"
+                                                           name="DeletedImagePaths"
+                                                           value="@path"
+                                                           class="form-check-input delete-checkbox" />
+                                                    <label class="form-check-label text-white small">Xóa</label>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-muted">Chưa có ảnh nào.</p>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Thêm ảnh mới -->
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">Thêm ảnh mới</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="ImageFiles" multiple class="form-control" accept="image/*" />
+                                <div class="form-text">Có thể chọn nhiều ảnh để thêm vào album hiện tại.</div>
+                            </div>
+                        </div>
+
+                        <!-- Thêm PDF mới -->
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">Thêm file PDF mới</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="PdfFile" class="form-control" accept=".pdf" />
+                                <div class="form-text">Toàn bộ trang PDF sẽ được chuyển thành ảnh và thêm vào album hiện tại.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-9 offset-sm-3 text-end">
+                                <button type="submit" class="btn btn-primary px-4">Cập Nhật</button>
+                                <a asp-action="ListThanhHinh" asp-route-categoryId="@Model.CategoryId" class="btn btn-secondary ms-2">Hủy</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Lightbox cho ảnh -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body text-center p-0">
+                <img id="modalImage" src="" class="img-fluid" alt="Ảnh phóng to" style="max-height: 90vh;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        // Xử lý hiệu ứng khi check xóa ảnh
+        document.querySelectorAll('.delete-checkbox').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                const item = this.closest('.image-item');
+                if (this.checked) {
+                    item.style.opacity = '0.4';
+                    item.style.transition = 'opacity 0.3s';
+                } else {
+                    item.style.opacity = '1';
+                }
+            });
+        });
+
+        // Hiển thị ảnh lớn trong modal
+        document.querySelectorAll('.enlarge-image').forEach(function (img) {
+            img.addEventListener('click', function () {
+                document.getElementById('modalImage').src = this.src;
+            });
+        });
+
+        // Đóng modal khi click vào ảnh lớn
+        document.getElementById('modalImage').addEventListener('click', function () {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+            if (modal) modal.hide();
+        });
+
+        // Xóa src khi modal đóng (tránh hiển thị ảnh cũ khi mở lại)
+        document.getElementById('imageModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('modalImage').src = '';
+        });
+    </script>

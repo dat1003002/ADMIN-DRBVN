@@ -100,5 +100,6 @@ namespace AspnetCoreMvcFull.Models
     public string? cylinder2 { get; set; }
     public string? head { get; set; }
     public string? nuoclammat { get; set; }
+    public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
   }
 }

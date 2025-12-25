@@ -47,6 +47,10 @@ builder.Services.AddScoped<IProductLTCTLService, ProductLTCTLService>();
 builder.Services.AddScoped<IProductLTCTLRepository, ProductLTCTLRepository>();
 builder.Services.AddScoped<IQuyCachCSCTLRepository, QuyCachCSCTLRepository>();
 builder.Services.AddScoped<IQuyCachCSCTLService, QuyCachCSCTLService>();
+builder.Services.AddScoped<ILuuHoaMHEService, LuuHoaMHEService>();
+builder.Services.AddScoped<ILuuHoaMHERepository, LuuHoaMHERepository>();
+builder.Services.AddScoped<IBangTaiRepository, BangTaiRepository>();
+builder.Services.AddScoped<IBangTaiService, BangTaiService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
