@@ -1,0 +1,197 @@
+@{
+    ViewData["Title"] = "Danh Sách Bảng Hướng Dẫn Lõi Thép";
+}
+@using X.PagedList
+@using AspnetCoreMvcFull.ModelDTO.Product
+@model IPagedList<BangTaiDTO>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a asp-controller="BangTai"
+       asp-action="CreateTH"
+       style="background:#428BCA; border:#428BCA solid 1px; color:white; padding:4px 10px; font-size:14px; text-decoration: none;">
+        Thêm Mới
+    </a>
+    <div class="d-flex">
+        <form asp-controller="BangTai"
+              asp-action="ListBHDLoiThep"
+              method="get"
+              style="display: flex; align-items: center;">
+            <div style="display: inline-flex; border: 1px solid #ccc; border-radius: 2px; overflow: hidden;">
+                <input type="hidden" name="page" value="1" />
+                <input type="text"
+                       name="searchName"
+                       placeholder="Nhập tên sản phẩm để tìm kiếm"
+                       value="@Context.Request.Query["searchName"]"
+                       style="border: none; padding: 5px 8px; font-size: 14px; width: 250px; height: 30px; outline: none;" />
+                <button type="submit"
+                        style="padding: 5px 12px; background-color: #428BCA; color: white; border: none; cursor: pointer; font-size: 14px; height: 30px; outline: none;">
+                    Tìm kiếm
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container mt-4">
+    @Html.AntiForgeryToken()
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning">Không có sản phẩm nào phù hợp.</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 mb-4" id="product-card-@product.ProductId">
+                    <div class="card text-center custom-card" style="border: 2px solid #a1a3a5; display: flex; flex-direction: column;">
+                        <div class="image-container" style="position: relative;">
+                            @{
+                                var firstImage = product.ExistingImagePaths?.FirstOrDefault();
+                                var imageSrc = string.IsNullOrEmpty(firstImage)
+                                    ? "~/public/products/no-image.jpg"
+                                    : firstImage;
+                            }
+                            <img class="card-img-top mx-auto custom-image"
+                                 src="@Url.Content(imageSrc)"
+                                 alt="@product.Name">
+                            <div class="button-container" style="position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 10;">
+                                <a asp-controller="BangTai"
+                                   asp-action="Edit"
+                                   asp-route-id="@product.ProductId"
+                                   style="background:#428BCA; color:white; padding:4px 8px; font-size:12px; border-radius:5px; text-decoration: none;">
+                                    <i class='bx bx-edit'></i>
+                                </a>
+                                <button type="button"
+                                        onclick="deleteProduct(@product.ProductId)"
+                                        style="background:#B74635; color:white; padding:4px 8px; border:none; border-radius:5px; font-size:12px;">
+                                    <i class='bx bx-trash-alt'></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body-title"
+                             data-bs-toggle="modal"
+                             data-bs-target="#modalScrollable"
+                             onclick="loadProduct(@product.ProductId)"
+                             style="margin-top: auto; cursor: pointer; padding: 12px;">
+                            <p class="custom-title">@product.Name</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="pagination" style="text-align:center; margin-top:30px;">
+            @if (Model.PageCount > 1)
+            {
+                @if (Model.HasPreviousPage)
+                {
+                    <a href="@Url.Action("ListBHDLoiThep", "BangTai", new { page = Model.PageNumber - 1, searchName = Context.Request.Query["searchName"] })"
+                       style="padding:8px 12px; margin:0 4px; border:1px solid #ddd; color:#428BCA; text-decoration:none; border-radius:4px;">«</a>
+                }
+                else
+                {
+                    <span style="padding:8px 12px; margin:0 4px; color:#ccc;">«</span>
+                }
+
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <a href="#" style="padding:8px 12px; margin:0 4px; background:#428BCA; color:white; border:1px solid #428BCA; text-decoration:none; border-radius:4px;">@i</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ListBHDLoiThep", "BangTai", new { page = i, searchName = Context.Request.Query["searchName"] })"
+                           style="padding:8px 12px; margin:0 4px; border:1px solid #ddd; color:#428BCA; text-decoration:none; border-radius:4px;">@i</a>
+                    }
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <a href="@Url.Action("ListBHDLoiThep", "BangTai", new { page = Model.PageNumber + 1, searchName = Context.Request.Query["searchName"] })"
+                       style="padding:8px 12px; margin:0 4px; border:1px solid #ddd; color:#428BCA; text-decoration:none; border-radius:4px;">»</a>
+                }
+                else
+                {
+                    <span style="padding:8px 12px; margin:0 4px; color:#ccc;">»</span>
+                }
+            }
+        </div>
+    }
+</div>
+
+<!-- Modal chi tiết sản phẩm -->
+<div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="height: 100%; border-radius: 0;">
+            <div class="modal-body p-0" id="modalBody" style="text-align:center; height: 100%; overflow: auto;">
+            </div>
+            <div class="modal-footer justify-content-center" style="position: fixed; bottom: 0; right: 0; z-index: 1050;">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" onclick="exitFullscreen()">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteProduct(productId) {
+        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+            $.ajax({
+                url: '@Url.Action("Delete", "BangTai")',
+                type: 'POST',
+                data: { productId: productId },
+                headers: {
+                    RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (result) {
+                    if (result.success) {
+                        $('#product-card-' + productId).fadeOut(400, function () { $(this).remove(); });
+                        alert(result.message);
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function (xhr) {
+                    alert("Có lỗi xảy ra: " + (xhr.responseJSON?.message || xhr.statusText || "Không thể xóa"));
+                }
+            });
+        }
+    }
+
+    function loadProduct(productId) {
+        $.ajax({
+            url: '@Url.Action("ShowModal", "BangTai")',
+            type: 'GET',
+            data: { id: productId },
+            success: function (data) {
+                $('#modalBody').html(data);
+                $('#modalScrollable').modal('show');
+                $('#modalScrollable').one('shown.bs.modal', function () {
+                    const modalElement = document.querySelector('#modalScrollable .modal-dialog');
+                    if (modalElement && modalElement.requestFullscreen) {
+                        modalElement.requestFullscreen().catch(err => {
+                            console.log('Lỗi fullscreen:', err);
+                        });
+                    }
+                });
+            },
+            error: function () {
+                alert('Có lỗi xảy ra khi tải dữ liệu sản phẩm.');
+            }
+        });
+    }
+
+    function exitFullscreen() {
+        if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+
+    $('#modalScrollable').on('hidden.bs.modal', function () {
+        if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    });
+</script>

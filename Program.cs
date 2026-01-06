@@ -51,6 +51,8 @@ builder.Services.AddScoped<ILuuHoaMHEService, LuuHoaMHEService>();
 builder.Services.AddScoped<ILuuHoaMHERepository, LuuHoaMHERepository>();
 builder.Services.AddScoped<IBangTaiRepository, BangTaiRepository>();
 builder.Services.AddScoped<IBangTaiService, BangTaiService>();
+builder.Services.AddScoped<ITTBangTaiRepository, TTBangTaiRepository>();
+builder.Services.AddScoped<ITTBangTaiService, TTBangTaiService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
