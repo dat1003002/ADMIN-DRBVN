@@ -209,6 +209,39 @@
 				</li>
 			</ul>
 </li>
+		<li class='menu-item@(currentPage.StartsWith("/Banbury") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class='menu-icon bx bx-food-menu'></i>
+				<div>Bộ Phận MS</div>
+			</a>
+			<ul class="menu-sub">
+				<li class='menu-item@(currentPage == "/Banbury/ListBanbury" ? " active" : "")'>
+					<a asp-controller="Banbury" asp-action="ListBanbury" class="menu-link">
+						<div>Tiêu Chuẩn Banbury</div>
+					</a>
+				</li>
+				<li class='menu-item@(currentPage == "/Banbury/ListOpenmill" ? " active" : "")'>
+					<a asp-controller="Banbury" asp-action="ListOpenmill" class="menu-link">
+						<div>Tiêu Chuẩn Open mill</div>
+					</a>
+				</li>
+				<li class='menu-item@(currentPage == "/Banbury/ListWeighing" ? " active" : "")'>
+					<a asp-controller="Banbury" asp-action="ListWeighing" class="menu-link">
+						<div>Tiêu Chuẩn Weighing</div>
+					</a>
+				</li>
+				<li class='menu-item@(currentPage == "/Banbury/ListStorage" ? " active" : "")'>
+					<a asp-controller="Banbury" asp-action="ListStorage" class="menu-link">
+						<div>Tiêu Chuẩn Storage</div>
+					</a>
+				</li>
+				<li class='menu-item@(currentPage == "/Banbury/ListCalender" ? " active" : "")'>
+					<a asp-controller="Banbury" asp-action="ListCalender" class="menu-link">
+						<div>Tiêu Chuẩn Calender</div>
+					</a>
+				</li>
+			</ul>
+		</li>
 		<li class='menu-item@(currentPage.StartsWith("/ProductKho") || currentPage.StartsWith("/Donghang") || currentPage.StartsWith("/Xuathangkho") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class='menu-icon bx bxs-business'></i>

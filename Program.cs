@@ -53,6 +53,8 @@ builder.Services.AddScoped<IBangTaiRepository, BangTaiRepository>();
 builder.Services.AddScoped<IBangTaiService, BangTaiService>();
 builder.Services.AddScoped<ITTBangTaiRepository, TTBangTaiRepository>();
 builder.Services.AddScoped<ITTBangTaiService, TTBangTaiService>();
+builder.Services.AddScoped<IMSService, MSService>();
+builder.Services.AddScoped<IMSRepository, MSRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
