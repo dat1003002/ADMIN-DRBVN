@@ -3,25 +3,16 @@
 
 	string? currentPage = ViewContext.HttpContext.Request.Path;
 }
-
-<!-- Menu -->
-@* ! Do this simple *@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-
-	@* ! Hide app brand if navbar-full *@
 	<div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
 		<a asp-controller="Dashboards" asp-action="Index" class="app-brand-link">
 			<img class="logo-drb" src="~/img/avatars/logodrb.png" alt="logo" />
 		</a>
-
 		<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
 			<i class="bx bx-chevron-left bx-sm d-flex align-items-center justify-content-center"></i>
 		</a>
 	</div>
-
-	@* ! Full version menu-items *@
 	<ul class="menu-inner py-1">
-		<!-- Dashboards -->
 		<li class='menu-item@(currentPage.EndsWith("/") ? " active" : "")'>
 			<a href="/" class="menu-link">
 				<i class="menu-icon tf-icons bx bxs-home"></i>
@@ -73,7 +64,6 @@
 						<div>Tiêu Chuẩn Gang Cầu</div>
 					</a>
 				</li>
-
 			</ul>
 		</li>
 		<li class='menu-item@(currentPage.StartsWith("/ProductCTL")|| currentPage.StartsWith("/CaoSuCTLCotroller")|| currentPage.StartsWith("/GangCauCTLCotroller")|| currentPage.StartsWith("/ThanHinhCTLCotronller") ? " active open" : "")'>
@@ -104,105 +94,121 @@
 				</li>
 			</ul>
 		</li>
-		<li class="menu-item @(currentPage.StartsWith("/BangTai") ? "active open" : "")">
-			<a href="javascript:void(0);" class="menu-link menu-toggle">
-				<i class="menu-icon tf-icons bx bx-book-content"></i>
-				<div>Bộ Phận Băng Tải</div>
-			</a>
-			@* <ul class="menu-sub"> *@
-			@* 	<li class="menu-item @(currentPage.StartsWith("/BangTai/List") ? "active open" : "")"> *@
-			@* 		<a href="javascript:void(0);" class="menu-link menu-toggle"> *@
-			@* 			<div style="font-size: 0.85rem;">Bảng Thông Tin</div> *@
-			@* 		</a> *@
-			@* 		<ul class="menu-sub"> *@
-			@* 			<li class="menu-item @(currentPage == "/BangTai/ListThanhHinh" ? "active" : "")"> *@
-			@* 				<a asp-controller="BangTai" asp-action="ListThanhHinh" class="menu-link"> *@
-			@* 					<div style="font-size: 0.78rem; color: #6c757d;">Sơ Đồ Tổ Chức</div> *@
-			@* 				</a> *@
-			@* 			</li> *@
-			@* 			<li class="menu-item @(currentPage == "/BangTai/ListLuuHoa" ? "active" : "")"> *@
-			@* 				<a asp-controller="BangTai" asp-action="ListLuuHoa" class="menu-link"> *@
-			@* 					<div style="font-size: 0.78rem; color: #6c757d;">Phân Ca</div> *@
-			@* 				</a> *@
-			@* 			</li> *@
-			@* 			<li class="menu-item @(currentPage == "/BangTai/ListCatBo" ? "active" : "")"> *@
-			@* 				<a asp-controller="BangTai" asp-action="ListLuuHoa" class="menu-link"> *@
-			@* 					<div style="font-size: 0.78rem; color: #6c757d;">Thông Báo</div> *@
-			@* 				</a> *@
-			@* 			</li> *@
-			@* 			<li class="menu-item @(currentPage == "/BangTai/ListLuuHoa" ? "active" : "")"> *@
-			@* 				<a asp-controller="BangTai" asp-action="ListLuuHoa" class="menu-link"> *@
-			@* 					<div style="font-size: 0.78rem; color: #6c757d;">5S/An Toàn</div> *@
-			@* 				</a> *@
-			@* 			</li> *@
-			@* 			<li class="menu-item @(currentPage == "/BangTai/ListLuuHoa" ? "active" : "")"> *@
-			@* 				<a asp-controller="BangTai" asp-action="ListLuuHoa" class="menu-link"> *@
-			@* 					<div style="font-size: 0.78rem; color: #6c757d;">Thông Báo Tăng Ca</div> *@
-			@* 				</a> *@
-			@* 			</li> *@
-			@* 		</ul> *@
-			@* 	</li> *@
-			@* </ul> *@
+		<li class="menu-item @((currentPage.StartsWith("/BangTai/List") || currentPage.StartsWith("/TTBangTai")) ? "active open" : "")">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-book-content"></i>
+        <div>Bộ Phận Băng Tải</div>
+    </a>
+    <ul class="menu-sub">
+        <li class="menu-item @(currentPage.StartsWith("/TTBangTai") ||
+                               currentPage == "/TTBangTai/ListLuuHoa" ||
+                               currentPage == "/TTBangTai/ListCatBo" ||
+                               currentPage == "/TTBangTai/List5S" ||
+                               currentPage == "/TTBangTai/ListTangCa" ? "active open" : "")">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <div style="font-size: 0.85rem;">Bảng Thông Tin</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item @(currentPage == "/TTBangTai/ListSoDoToChuc" ? "active" : "")">
+                    <a asp-controller="TTBangTai" asp-action="ListSoDoToChuc" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Sơ Đồ Tổ Chức</div>
+                    </a>
+                </li>
+						<li class="menu-item @(currentPage == "/TTBangTai/ListPhanCa" ? "active" : "")">
+							<a asp-controller="TTBangTai" asp-action="ListPhanCa" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Phân Ca</div>
+                    </a>
+                </li>
+						<li class="menu-item @(currentPage == "/TTBangTai/ListThongBao" ? "active" : "")">
+							<a asp-controller="TTBangTai" asp-action="ListThongBao" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Thông Báo</div>
+                    </a>
+                </li>
+						<li class="menu-item @(currentPage == "/TTBangTai/ListAnToan" ? "active" : "")">
+							<a asp-controller="TTBangTai" asp-action="ListAnToan" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">5S/An Toàn</div>
+                    </a>
+                </li>
+						<li class="menu-item @(currentPage == "/TTBangTai/ListThongBaoTangCa" ? "active" : "")">
+							<a asp-controller="TTBangTai" asp-action="ListThongBaoTangCa" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Thông Báo Tăng Ca</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item @(currentPage == "/BangTai/ListThanhHinh" ||
+                               currentPage == "/BangTai/ListDunBien" ||
+                               currentPage == "/BangTai/ListLoiThep" ||
+                               currentPage == "/BangTai/ListNgoaiQuan" ||
+                               currentPage == "/BangTai/ListEndless" ||
+                               currentPage == "/BangTai/ListFilter" ||
+                               currentPage == "/BangTai/ListGrooving" ||
+                               currentPage == "/BangTai/ListMoiNoi" ? "active open" : "")">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <div style="font-size: 0.85rem;">Tiêu Chuẩn Công Việc</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item @(currentPage == "/BangTai/ListThanhHinh" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListThanhHinh" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Thành Hình</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListDunBien" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListDunBien" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Đùn Biên</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListLoiThep" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListLoiThep" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Thành Hình Thép Ngang</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListNgoaiQuan" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListNgoaiQuan" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Kiểm Tra Ngoại Quan</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListEndless" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListEndless" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Endless</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListFilter" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListFilter" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Filter</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListGrooving" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListGrooving" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Grooving</div>
+                    </a>
+                </li>
+                <li class="menu-item @(currentPage == "/BangTai/ListMoiNoi" ? "active" : "")">
+                    <a asp-controller="BangTai" asp-action="ListMoiNoi" class="menu-link">
+                        <div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Mối Nối</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 			<ul class="menu-sub">
-				<li class="menu-item @(currentPage.StartsWith("/BangTai/List") ? "active open" : "")">
-					<a href="javascript:void(0);" class="menu-link menu-toggle">
-						<div style="font-size: 0.85rem;">Tiêu Chuẩn Công Việc</div>
+				<li class="menu-item @(currentPage == "/BangTai/ListBHDLoiThep" ? "active" : "")">
+					<a asp-controller="BangTai" asp-action="ListBHDLoiThep" class="menu-link">
+						<div>BHD Hàng Lõi Thép</div>
 					</a>
-					<ul class="menu-sub">
-						<li class="menu-item @(currentPage == "/BangTai/ListThanhHinh" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListThanhHinh" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Thành Hình</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListLuuHoa" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListLuuHoa" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Lưu Hóa</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListCatBo" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListCatBo" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Cắt Bố</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListDunBien" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListDunBien" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Đùn Biên</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListLoiThep" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListLoiThep" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Thành hình Thép Ngang</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListNgoaiQuan" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListNgoaiQuan" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Kiểm Tra Ngoại Quan</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListEndless" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListEndless" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Endless</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListFilter" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListFilter" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Filter</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListGrooving" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListGrooving" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Grooving</div>
-							</a>
-						</li>
-						<li class="menu-item @(currentPage == "/BangTai/ListMoiNoi" ? "active" : "")">
-							<a asp-controller="BangTai" asp-action="ListMoiNoi" class="menu-link">
-								<div style="font-size: 0.78rem; color: #6c757d;">Công Đoạn Mối Nối</div>
-							</a>
-						</li>
-					</ul>
+				</li>
+				<li class="menu-item @(currentPage == "/BangTai/ListThietKe" ? "active" : "")">
+					<a asp-controller="BangTai" asp-action="ListThietKe" class="menu-link">
+						<div>Thiết Kế</div>
+					</a>
+				</li>
+				<li class="menu-item @(currentPage == "/BangTai/ListKeHoachSanXuat" ? "active" : "")">
+					<a asp-controller="BangTai" asp-action="ListKeHoachSanXuat" class="menu-link">
+						<div>Kế Hoạch Sản Xuất</div>
+					</a>
 				</li>
 			</ul>
-		</li>
+</li>
 		<li class='menu-item@(currentPage.StartsWith("/ProductKho") || currentPage.StartsWith("/Donghang") || currentPage.StartsWith("/Xuathangkho") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class='menu-icon bx bxs-business'></i>
@@ -248,4 +254,3 @@
 		@* </li> *@
 	</ul>
 </aside>
-x 
