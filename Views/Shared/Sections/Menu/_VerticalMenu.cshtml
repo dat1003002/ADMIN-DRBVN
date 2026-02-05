@@ -221,6 +221,45 @@
 				</li>
 			</ul>
 		</li>
+
+        <li class='menu-item@(currentPage.StartsWith("/ProductStandardMHE") || currentPage.StartsWith("/RawMaterialMetalCore") || currentPage.StartsWith("/LaboratoryEquipmentF1Controller") || currentPage.StartsWith("/LaboratoryEquipmentF2") || currentPage.StartsWith("/QCEmployeeF1") || currentPage.StartsWith("/QCEmployeeF2") ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class='menu-icon bx bx-check-circle'></i>
+                <div>Bộ Phận QC</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage.StartsWith("/ProductStandardMHE/ListProductStandardMHE") ? " active" : "")'>
+                    <a asp-controller="ProductStandardMHE" asp-action="ListProductStandardMHE" class="menu-link">
+                        <div>Product Standard</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage.StartsWith("/RawMaterialMetalCore/ListMetalCore") ? " active" : "")'>
+                    <a asp-controller="RawMaterialMetalCore" asp-action="ListMetalCore" class="menu-link">
+                        <div>Raw Material Standard</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage.StartsWith("/LaboratoryEquipmentF1/ListLaboratoryEquipmentF1") ? " active" : "")'>
+                    <a asp-controller="LaboratoryEquipmentF1" asp-action="ListLaboratoryEquipmentF1" class="menu-link">
+                        <div>Lab Equipment F#1</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage.StartsWith("/LabEquimentF2/ListLaboratoryEquipmentF2") ? " active" : "")'>
+                    <a asp-controller="LaboratoryEquipmentF2" asp-action="ListLaboratoryEquipmentF2" class="menu-link">
+                        <div>Lab Equipment F#2</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage == "/QCEmployeeF1/QCEmployeeF1" ? " active" : "")'>
+                    <a asp-controller="QCEmployeeF1" asp-action="QCEmployeeF1" class="menu-link">
+                        <div>QC Employee F#1</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage == "/QCEmployeeF2/QCEmployeeF2" ? " active" : "")'>
+                    <a asp-controller="QCEmployeeF2" asp-action="QCEmployeeF2" class="menu-link">
+                        <div>QC Employee F#2</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
 		@* <li class='menu-item@(currentPage.StartsWith("/Pages/Account") ? " active open" : "")'> *@
 		@* 	<a href="javascript:void(0);" class="menu-link menu-toggle"> *@
 		@* 		<i class='menu-icon bx bx-user'></i> *@

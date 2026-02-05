@@ -52,6 +52,50 @@ builder.Services.AddScoped<ILuuHoaMHERepository, LuuHoaMHERepository>();
 builder.Services.AddScoped<IBangTaiRepository, BangTaiRepository>();
 builder.Services.AddScoped<IBangTaiService, BangTaiService>();
 
+//QC
+builder.Services.AddScoped<IQCEmployeeF1Repository, QCEmployeeF1Repository>();
+builder.Services.AddScoped<IQCEmployeeF1Service, QCEmployeeF1Service>();
+builder.Services.AddScoped<IQCEmployeeF2Repository, QCEmployeeF2Repository>();
+builder.Services.AddScoped<IQCEmployeeF2Service, QCEmployeeF2Service>();
+builder.Services.AddScoped<ILaboratoryEquipmentF2Repository, LaboratoryEquipmentF2Repository>();     
+builder.Services.AddScoped<ILaboratoryEquipmentF2Service, LaboratoryEquipmentF2Service>();
+// F2 - Kết quả hiệu chuẩn
+builder.Services.AddScoped<ICalibrationF2Service, CalibrationF2Service>();
+builder.Services.AddScoped<ICalibrationF2Repository, CalibrationF2Repository>();
+// F2 - Tiêu chuẩn kiểm tra hằng ngày
+builder.Services.AddScoped<ILabEquipF2DailyCheckService, LabEquipF2DailyCheckService>();
+builder.Services.AddScoped<ILabEquipF2DailyCheckRepository, LabEquipF2DailyCheckRepository>();
+
+builder.Services.AddScoped<ILaboratoryEquipmentF1Repository, LaboratoryEquipmentF1Repository>();
+builder.Services.AddScoped<ILaboratoryEquipmentF1Service, LaboratoryEquipmentF1Service>();
+builder.Services.AddScoped<ILabCalibrationF1Service, LabCalibrationF1Service>();
+builder.Services.AddScoped<ILabCalibrationF1Repository, LabCalibrationF1Repository>();
+builder.Services.AddScoped<ILabEquipF1DailyCheckService, LabEquipF1DailyCheckService>();
+builder.Services.AddScoped<ILabEquipF1DailyCheckRepository, LabEquipF1DailyCheckRepository>();
+
+builder.Services.AddScoped<IRawMaterialMetalCoreService, RawMaterialMetalCoreService>();
+builder.Services.AddScoped<IRawMaterialMetalCoreRepository, RawMaterialMetalCoreRepository>();
+builder.Services.AddScoped<IRawMaterialChemicalService, RawMaterialChemicalService>();
+builder.Services.AddScoped<IRawMaterialChemicalRepository, RawMaterialChemicalRepository>();
+builder.Services.AddScoped<IRawMaterialSteelCordService, RawMaterialSteelCordService>();
+builder.Services.AddScoped<IRawMaterialSteelCordRepository, RawMaterialSteelCordRepository>();
+builder.Services.AddScoped<IRawMaterialFabricService, RawMaterialFabricService>();
+builder.Services.AddScoped<IRawMaterialFabricRepository, RawMaterialFabricRepository>();
+
+// Repository
+builder.Services.AddScoped<IProductStandardMHERepository, ProductStandardMHERepository>();
+builder.Services.AddScoped<IProductStandardCTLRepository, ProductStandardCTLRepository>();
+builder.Services.AddScoped<IProductStandardCBRepository, ProductStandardCBRepository>();
+builder.Services.AddScoped<IProductStandardMSRepository, ProductStandardMSRepository>();
+// Service
+builder.Services.AddScoped<IProductStandardMHEService, ProductStandardMHEService>();
+builder.Services.AddScoped<IProductStandardCTLService, ProductStandardCTLService>();
+builder.Services.AddScoped<IProductStandardCBService, ProductStandardCBService>();
+builder.Services.AddScoped<IProductStandardMSService, ProductStandardMSService>();
+
+
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

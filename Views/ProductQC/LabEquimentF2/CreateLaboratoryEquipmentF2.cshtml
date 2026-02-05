@@ -1,0 +1,56 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.LaboratoryEquipmentF2DTO
+
+@{
+    ViewData["Title"] = "Thêm Thiết Bị Phòng Lab F#2";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Thêm Thiết Bị Phòng Lab F#2</h5>
+                </div>
+                <div class="card-body">
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                    <form asp-action="CreateLaboratoryEquipmentF2" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Tên Thiết Bị</label>
+                            <div class="col-sm-8">
+                                <input type="text" asp-for="name" class="form-control" required />
+                                <span asp-validation-for="name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Ảnh Thiết Bị</label>
+                            <div class="col-sm-8">
+                                <input type="file" asp-for="imageFile" class="form-control" accept="image/*" />
+                                <span asp-validation-for="imageFile" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Danh Mục</label>
+                            <div class="col-sm-8">
+                                <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-control" required>
+                                    <option value="">Chọn danh mục</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-end">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <a asp-action="ListLaboratoryEquipmentF2" class="btn btn-outline-secondary">Hủy</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
