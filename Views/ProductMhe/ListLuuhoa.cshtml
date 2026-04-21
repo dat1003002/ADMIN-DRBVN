@@ -44,9 +44,12 @@
 			@foreach (var product in Model)
 			{
 				<div class="col-12 col-sm-6 col-md-4 mb-4">
-					<div class="card text-center custom-card" style="border: 2px solid #a1a3a5; display: flex; flex-direction: column;">
+					<div class="card text-center custom-card"
+						 style="border: 2px solid #a1a3a5; display: flex; flex-direction: column;">
+
 						<div class="image-container">
 							<img class="card-img-top mx-auto custom-image"
+								 loading="lazy"
 								 src="@Url.Content("~/images/" + (string.IsNullOrEmpty(product.image) ? "no-image.jpg" : product.image))"
 								 alt="@product.name">
 
@@ -73,48 +76,92 @@
 							 style="margin-top: auto; cursor: pointer;">
 							<p class="custom-title">@product.name</p>
 						</div>
+
 					</div>
 				</div>
 			}
 		</div>
 
-		<!-- Hiển thị phân trang -->
-		<div class="pagination">
+		<!-- PAGER TỐI ƯU (giảm render để load nhanh hơn) -->
+		<div class="pagination mt-4 d-flex justify-content-center flex-wrap gap-1">
 			@if (Model.PageCount > 1)
 			{
-				@if (Model.HasPreviousPage)
+				int startPage = Math.Max(1, Model.PageNumber - 2);
+				int endPage = Math.Min(Model.PageCount, Model.PageNumber + 2);
+
+				if (Model.HasPreviousPage)
 				{
-					<a href="@Url.Action("ListLuuhoa", new { page = Model.PageNumber - 1, searchName = Context.Request.Query["searchName"] })">&laquo;</a>
+					<a href="@Url.Action("ListLuuhoa", new { page = Model.PageNumber - 1, searchName = Context.Request.Query["searchName"] })"
+					   class="btn btn-outline-primary">
+						&laquo;
+					</a>
 				}
 
-				@for (int i = 1; i <= Model.PageCount; i++)
+				if (startPage > 1)
+				{
+					<a href="@Url.Action("ListLuuhoa", new { page = 1, searchName = Context.Request.Query["searchName"] })"
+					   class="btn btn-outline-primary">1</a>
+
+					if (startPage > 2)
+					{
+						<span class="btn btn-link text-muted px-2">...</span>
+					}
+				}
+
+				for (int i = startPage; i <= endPage; i++)
 				{
 					if (i == Model.PageNumber)
 					{
-						<a href="#" class="active">@i</a>
+						<span class="btn btn-primary">@i</span>
 					}
 					else
 					{
-						<a href="@Url.Action("ListLuuhoa", new { page = i, searchName = Context.Request.Query["searchName"] })">@i</a>
+						<a href="@Url.Action("ListLuuhoa", new { page = i, searchName = Context.Request.Query["searchName"] })"
+						   class="btn btn-outline-primary">
+							@i
+						</a>
 					}
 				}
 
-				@if (Model.HasNextPage)
+				if (endPage < Model.PageCount)
 				{
-					<a href="@Url.Action("ListLuuhoa", new { page = Model.PageNumber + 1, searchName = Context.Request.Query["searchName"] })">&raquo;</a>
+					if (endPage < Model.PageCount - 1)
+					{
+						<span class="btn btn-link text-muted px-2">...</span>
+					}
+
+					<a href="@Url.Action("ListLuuhoa", new { page = Model.PageCount, searchName = Context.Request.Query["searchName"] })"
+					   class="btn btn-outline-primary">
+						@Model.PageCount
+					</a>
+				}
+
+				if (Model.HasNextPage)
+				{
+					<a href="@Url.Action("ListLuuhoa", new { page = Model.PageNumber + 1, searchName = Context.Request.Query["searchName"] })"
+					   class="btn btn-outline-primary">
+						&raquo;
+					</a>
 				}
 			}
 		</div>
 	}
 </div>
 
+<!-- MODAL GIỮ NGUYÊN -->
 <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog modal-fullscreen">
 		<div class="modal-content" style="height: 100%; border-radius: 0;">
 			<div class="modal-body p-0" id="modalBody" style="text-align:center; height: 100%; overflow: auto;">
 			</div>
-			<div class="modal-footer justify-content-center" style="position: fixed; bottom: 0; right: 0; z-index: 1050;">
-				<button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" onclick="exitFullscreen()">Đóng</button>
+			<div class="modal-footer justify-content-center"
+				 style="position: fixed; bottom: 0; right: 0; z-index: 1050;">
+				<button type="button"
+						class="btn btn-sm btn-primary"
+						data-bs-dismiss="modal"
+						onclick="exitFullscreen()">
+					Đóng
+				</button>
 			</div>
 		</div>
 	</div>
@@ -128,7 +175,6 @@
 				type: 'POST',
 				data: { ProductId: productId },
 				success: function () {
-					alert("Sản phẩm đã được xóa thành công!");
 					location.reload();
 				},
 				error: function (xhr) {
@@ -139,25 +185,18 @@
 	}
 
 	function loadProduct(productId) {
+		$('#modalBody').html('<div style="padding:50px;">Loading...</div>');
+
 		$.ajax({
 			url: '@Url.Action("showProductLHMHE", "LuuhoaMHE")',
 			type: 'GET',
+			cache: true,
 			data: { id: productId },
 			success: function (data) {
 				$('#modalBody').html(data);
-				$('#modalScrollable').modal('show');
-
-				$('#modalScrollable').on('shown.bs.modal', function () {
-					const modalElement = document.querySelector('#modalScrollable .modal-dialog');
-					if (modalElement.requestFullscreen) {
-						modalElement.requestFullscreen().catch(err => {
-							console.log('Lỗi kích hoạt full màn hình:', err);
-						});
-					}
-				});
 			},
 			error: function () {
-				alert('Có lỗi xảy ra khi tải dữ liệu sản phẩm.');
+				$('#modalBody').html('<div class="alert alert-danger">Lỗi tải dữ liệu</div>');
 			}
 		});
 	}
