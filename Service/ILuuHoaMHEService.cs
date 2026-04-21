@@ -16,10 +16,8 @@ namespace AspnetCoreMvcFull.Service
     Task<IEnumerable<LuuHoaMHEDTO>> SearchProductsByNameAsync(string name, int categoryId);
     Task<IPagedList<LuuHoaMHEDTO>> SearchProductsByNameAsync(string name, int categoryId, int page, int pageSize);
 
-    // Phương thức xử lý file khi tạo mới
     Task<string> ProcessAndSaveFileAsync(IFormFile? pdfFile, IFormFile? imageFile, string imageFolderPath);
 
-    // Phương thức mới: xử lý thay thế file khi chỉnh sửa (có xóa ảnh cũ)
     Task<string> ProcessAndSaveReplacementFileAsync(IFormFile? pdfFile, IFormFile? imageFile, string imageFolderPath, string? currentImageName);
   }
 }

@@ -11,7 +11,7 @@ namespace AspnetCoreMvcFull.Repository
     Task DeleteProductAsync(int ProductId);
     Task<LuuHoaMHEDTO> GetProductByIdAsync(int productId);
     Task UpdateProductAsync(LuuHoaMHEDTO product);
+
     Task<IQueryable<LuuHoaMHEDTO>> SearchProductsByNameAsync(string name, int categoryId);
-    Task<IEnumerable<LuuHoaMHEDTO>> SearchProductsByNameAsync(string name, int categoryId, int page, int pageSize);
   }
 }

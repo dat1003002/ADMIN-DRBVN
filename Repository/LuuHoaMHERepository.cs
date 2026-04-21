@@ -60,6 +60,7 @@ namespace AspnetCoreMvcFull.Repository
     {
       var products = _luuhoaRepository.Products
           .Where(p => p.CategoryId == categoryId)
+          .OrderBy(p => p.name)
           .Select(p => new LuuHoaMHEDTO
           {
             ProductId = p.ProductId,
@@ -70,10 +71,12 @@ namespace AspnetCoreMvcFull.Repository
 
       return await Task.FromResult(products);
     }
+
     public Task<IQueryable<LuuHoaMHEDTO>> SearchProductsByNameAsync(string name, int categoryId)
     {
       var products = _luuhoaRepository.Products
           .Where(p => EF.Functions.Like(p.name, $"%{name}%") && p.CategoryId == categoryId)
+          .OrderBy(p => p.name)
           .Select(p => new LuuHoaMHEDTO
           {
             ProductId = p.ProductId,
@@ -83,24 +86,6 @@ namespace AspnetCoreMvcFull.Repository
           });
 
       return Task.FromResult(products);
-    }
-    public async Task<IEnumerable<LuuHoaMHEDTO>> SearchProductsByNameAsync(string name, int categoryId, int page, int pageSize)
-    {
-      var products = await _luuhoaRepository.Products
-          .Where(p => EF.Functions.Like(p.name, $"%{name}%") && p.CategoryId == categoryId)
-          .OrderBy(p => p.name)
-          .Skip((page - 1) * pageSize)
-          .Take(pageSize)
-          .Select(p => new LuuHoaMHEDTO
-          {
-            ProductId = p.ProductId,
-            name = p.name,
-            image = p.image,
-            CategoryId = p.CategoryId
-          })
-          .ToListAsync();
-
-      return products;
     }
 
     public async Task UpdateProductAsync(LuuHoaMHEDTO product)
