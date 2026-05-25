@@ -1,0 +1,87 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.CTLDTO
+
+@if (Model != null)
+{
+    <div class="text-center">
+        <h5 class="mb-3">@Model.Name</h5>
+        
+        @if (Model.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
+        {
+            <div id="modalCarousel" class="carousel slide" data-bs-touch="true" data-bs-interval="false">
+                <div class="carousel-indicators">
+                    @for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+                    {
+                        <button type="button"
+                                data-bs-target="#modalCarousel"
+                                data-bs-slide-to="@i"
+                                class="@(i == 0 ? "active" : "")"
+                                aria-current="@(i == 0 ? "true" : "false")"
+                                aria-label="Slide @(i + 1)"></button>
+                    }
+                </div>
+                <div class="carousel-inner">
+                    @for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img src="@Url.Content(Model.ExistingImagePaths[i])"
+                                 class="d-block w-100 clickable-image"
+                                 style="cursor: pointer;"
+                                 alt="@Model.Name - Ảnh @(i + 1)" />
+                        </div>
+                    }
+                </div>
+                <style>
+                    #modalCarousel .carousel-control-prev,
+                    #modalCarousel .carousel-control-next {
+                        display: none !important;
+                    }
+                </style>
+            </div>
+        }
+        else
+        {
+            <img src="~/public/products/no-image.jpg" alt="No Image" style="width:100%;" />
+        }
+    </div>
+
+    <!-- Script giữ nguyên logic, chỉ sửa tên cho phù hợp -->
+    <script>
+        function initializeModalCarousel() {
+            const carouselElement = document.getElementById('modalCarousel');
+            if (!carouselElement) return;
+
+            const carousel = bootstrap.Carousel.getOrCreateInstance(carouselElement);
+
+            carouselElement.querySelectorAll('.clickable-image').forEach(img => {
+                img.onclick = () => carousel.next();
+            });
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            carouselElement.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carouselElement.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                const threshold = 50;
+                if (Math.abs(diff) > threshold) {
+                    if (diff > 0) {
+                        carousel.next();
+                    } else {
+                        carousel.prev();
+                    }
+                }
+            }, { passive: true });
+        }
+
+        initializeModalCarousel();
+
+        const modalElement = document.querySelector('.modal');
+        if (modalElement) {
+            modalElement.addEventListener('shown.bs.modal', initializeModalCarousel);
+        }
+    </script>
+}
