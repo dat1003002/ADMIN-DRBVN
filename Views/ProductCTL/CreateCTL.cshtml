@@ -1,0 +1,80 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.CTLDTO
+@{
+    ViewData["Title"] = "Thêm Mới - Tiêu Chuẩn CTL";
+    Layout = "~/Views/Shared/_ContentNavbarLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Thêm Mới Tiểu Chuẩn Công Việc</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Lỗi:</strong> @ViewBag.ErrorMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-controller="CTL"
+                          asp-action="CreateCTL"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+                        <input type="hidden" asp-for="CategoryId" />
+
+                        <div class="row mb-3">
+                            <label asp-for="Name" class="col-sm-3 col-form-label fw-bold">
+                                Tên Sản Phẩm <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" class="form-control" placeholder="Nhập tên sản phẩm" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">Danh Mục</label>
+                            <div class="col-sm-9">
+                                <input type="text"
+                                       class="form-control bg-light"
+                                       readonly
+                                       value="@ViewBag.CategoryName" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Upload nhiều ảnh</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="ImageFiles" multiple class="form-control" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Upload file PDF (tùy chọn)</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="PdfFile" class="form-control" accept=".pdf" />
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-end mt-4">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary me-2">Lưu Thông Tin</button>
+                                <a asp-controller="CTL"
+                                   asp-action="@(Model.CategoryId == 39 ? "ListProductStandardCTL" : "ListProductStandardShoepad")"
+                                   class="btn btn-secondary">Hủy</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

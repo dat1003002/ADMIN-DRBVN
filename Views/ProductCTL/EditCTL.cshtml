@@ -1,0 +1,112 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.CTLDTO
+@{
+    ViewData["Title"] = "Chỉnh Sửa Tiêu Chuẩn CTL";
+    Layout = "~/Views/Shared/_ContentNavbarLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <div class="card shadow">
+                <div class="card-header text-white">
+                    <h5 class="mb-0">Chỉnh Sửa Bảng Hướng Dẫn Công Việc</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="CTL" asp-action="EditCTL" method="post" enctype="multipart/form-data" id="editForm">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="ProductId" />
+                        <input type="hidden" asp-for="CategoryId" />
+
+                        <div class="row mb-3">
+                            <label asp-for="Name" class="col-sm-3 col-form-label fw-bold">Tên Tiêu Chuẩn</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">
+                                Ảnh hiện có
+                                <span class="badge bg-secondary ms-2">@(Model?.ExistingImagePaths?.Count ?? 0)</span>
+                            </label>
+                            <div class="col-sm-9">
+                                @if (Model?.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
+                                {
+                                    <div class="row g-3" id="imageContainer">
+                                        @for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+                                        {
+                                            var path = Model.ExistingImagePaths[i];
+                                            <div class="col-md-4 position-relative image-item">
+                                                <img src="@path" class="img-thumbnail enlarge-image"
+                                                     style="height: 220px; width: 100%; object-fit: cover; cursor: zoom-in;"
+                                                     alt="Ảnh sản phẩm" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                                                <div class="position-absolute top-0 end-0 p-2 bg-dark bg-opacity-75 rounded">
+                                                    <input type="checkbox" name="DeletedImagePaths" value="@path" class="form-check-input delete-checkbox" />
+                                                    <label class="form-check-label text-white small">Xóa</label>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-muted">Chưa có ảnh nào.</p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">Thêm ảnh mới</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="ImageFiles" multiple class="form-control" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">Thêm file PDF mới</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="PdfFile" class="form-control" accept=".pdf" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-sm-9 offset-sm-3 text-end">
+                                <button type="submit" class="btn btn-primary px-4">Cập Nhật</button>
+                                <a asp-controller="CTL"
+                                   asp-action="@(Model?.CategoryId == 39 ? "ListProductStandardCTL" : "ListProductStandardShoepad")"
+                                   class="btn btn-secondary ms-2">Hủy</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body text-center p-0">
+                <img id="modalImage" src="" class="img-fluid" alt="Ảnh phóng to" style="max-height: 90vh;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.delete-checkbox').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                const item = this.closest('.image-item');
+                item.style.opacity = this.checked ? '0.4' : '1';
+            });
+        });
+
+        document.querySelectorAll('.enlarge-image').forEach(function (img) {
+            img.addEventListener('click', function () {
+                document.getElementById('modalImage').src = this.src;
+            });
+        });
+    </script>
+}
