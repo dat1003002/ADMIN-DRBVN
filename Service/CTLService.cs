@@ -93,8 +93,6 @@ namespace AspnetCoreMvcFull.Service
 
         _context.ProductImages.RemoveRange(imagesToDelete);
       }
-
-      // Thêm ảnh/PDF mới
       await ProcessImageFilesAsync(product, ctlDTO.ImageFiles);
       await ProcessPdfToImagesAsync(product, ctlDTO.PdfFile);
 
@@ -117,8 +115,6 @@ namespace AspnetCoreMvcFull.Service
 
       await _repository.DeleteProductAsync(productId);
     }
-
-    // ====================== XỬ LÝ ẢNH ======================
     private async Task ProcessImageFilesAsync(Product product, List<IFormFile> imageFiles)
     {
       if (imageFiles == null || !imageFiles.Any()) return;

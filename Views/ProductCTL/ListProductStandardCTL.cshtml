@@ -85,8 +85,6 @@
                 </div>
             }
         </div>
-
-        <!-- Phân trang -->
         <div class="pagination" style="text-align:center; margin-top:30px;">
             @if (Model.PageCount > 1)
             {
@@ -156,7 +154,7 @@
 
     function loadProduct(productId) {
         $.ajax({
-            url: '@Url.Action("ModalCTL", "CTL")',   <!-- SỬA Ở ĐÂY -->
+            url: '@Url.Action("ModalCTL", "CTL")',
             type: 'GET',
             data: { id: productId },
             success: function (data) {

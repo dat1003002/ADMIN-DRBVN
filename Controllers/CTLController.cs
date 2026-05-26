@@ -16,15 +16,12 @@ namespace AspnetCoreMvcFull.Controllers
     private readonly ICTLService _ctlService;
     private const int PageSize = 9;
 
-    // Khai báo danh sách Category được phép (đây là dòng bị thiếu)
-    private readonly List<int> AllowedCategoryIds = new List<int> { 39, 40 };
+    private readonly List<int> AllowedCategoryIds = new List<int> { 39, 42 };
 
     public CTLController(ICTLService ctlService)
     {
       _ctlService = ctlService;
     }
-
-    // ====================== LIST ======================
     public async Task<IActionResult> ListProductStandardCTL(int page = 1, string searchName = null)
     {
       return await GetPagedList(39, page, searchName,
@@ -34,7 +31,7 @@ namespace AspnetCoreMvcFull.Controllers
 
     public async Task<IActionResult> ListProductStandardShoepad(int page = 1, string searchName = null)
     {
-      return await GetPagedList(40, page, searchName,
+      return await GetPagedList(42, page, searchName,
           "~/Views/ProductCTL/ListProductStandardShoepad.cshtml",
           "Tiêu Chuẩn Shoepad");
     }
@@ -55,18 +52,29 @@ namespace AspnetCoreMvcFull.Controllers
 
       return View(viewPath, pagedList);
     }
-
-    // ====================== CREATE ======================
-    // ====================== CREATE ======================
-    public IActionResult CreateCTL(int categoryId = 39)
+    public async Task<IActionResult> CreateCTL(int categoryId = 0)
     {
+      if (categoryId != 39 && categoryId != 42)
+      {
+        TempData["Error"] = "Không thể xác định danh mục. Vui lòng truy cập từ tab đúng.";
+        return RedirectToAction(nameof(ListProductStandardCTL));
+      }
+
       var model = new CTLDTO
       {
-        CategoryId = categoryId   // Tự động set danh mục theo tab
+        CategoryId = categoryId
       };
+
+      var categoryName = await GetCategoryNameByIdAsync(categoryId);
+      ViewBag.CategoryName = categoryName;
+
+      if (categoryName.Contains("Không tồn tại"))
+      {
+        ViewBag.ErrorMessage = categoryName;
+      }
+
       return View("~/Views/ProductCTL/CreateCTL.cshtml", model);
     }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateCTL(CTLDTO ctlDTO)
@@ -75,52 +83,55 @@ namespace AspnetCoreMvcFull.Controllers
       {
         await _ctlService.AddProductAsync(ctlDTO);
 
-        // Redirect về đúng tab sau khi thêm thành công
         return ctlDTO.CategoryId == 39
             ? RedirectToAction(nameof(ListProductStandardCTL))
             : RedirectToAction(nameof(ListProductStandardShoepad));
       }
 
-      // Nếu lỗi validate, trả về form và giữ CategoryId
+      ViewBag.CategoryName = await GetCategoryNameByIdAsync(ctlDTO.CategoryId);
       return View("~/Views/ProductCTL/CreateCTL.cshtml", ctlDTO);
     }
 
-    // ====================== EDIT - GET ======================
+    private async Task<string> GetCategoryNameByIdAsync(int categoryId)
+    {
+      var categories = await _ctlService.GetCategoriesAsync();
+      var category = categories.FirstOrDefault(c => c.CategoryId == categoryId);
+
+      if (category != null)
+        return category.CategoryName;
+
+      return "Danh mục không tồn tại, vui lòng kiểm tra lại";
+    }
+
     public async Task<IActionResult> EditCTL(int id)
     {
       try
       {
         Console.WriteLine($"[DEBUG] EditCTL GET - ID: {id}");
-
         var product = await _ctlService.GetProductByIdAsync(id);
 
         if (product == null)
         {
-          Console.WriteLine($"[ERROR] Product ID {id} not found in database");
+          Console.WriteLine($"[ERROR] Product ID {id} not found");
           return NotFound($"Không tìm thấy sản phẩm ID = {id}");
         }
 
         if (!AllowedCategoryIds.Contains(product.CategoryId))
         {
-          Console.WriteLine($"[ERROR] CategoryId {product.CategoryId} is not allowed");
+          Console.WriteLine($"[ERROR] CategoryId {product.CategoryId} not allowed");
           return NotFound("Danh mục không hợp lệ");
         }
 
-        // Load dropdown danh mục (rất quan trọng)
         await PopulateAllowedCategoryListAsync(product.CategoryId);
-
-        Console.WriteLine($"[DEBUG] Success - Returning Edit view for ID {id}");
         return View("~/Views/ProductCTL/EditCTL.cshtml", product);
       }
       catch (Exception ex)
       {
         Console.WriteLine($"[ERROR] EditCTL GET Exception: {ex.Message}");
-        Console.WriteLine($"StackTrace: {ex.StackTrace}");
         return StatusCode(500, $"Lỗi server: {ex.Message}");
       }
     }
 
-    // ====================== EDIT - POST ======================
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditCTL(CTLDTO ctlDTO)
@@ -135,7 +146,6 @@ namespace AspnetCoreMvcFull.Controllers
         if (ModelState.IsValid)
         {
           await _ctlService.UpdateProductAsync(ctlDTO);
-
           return ctlDTO.CategoryId == 39
               ? RedirectToAction(nameof(ListProductStandardCTL))
               : RedirectToAction(nameof(ListProductStandardShoepad));
@@ -153,7 +163,6 @@ namespace AspnetCoreMvcFull.Controllers
       }
     }
 
-    // ====================== DELETE ======================
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteProductStandardCTL(int productId)
@@ -169,12 +178,10 @@ namespace AspnetCoreMvcFull.Controllers
       }
     }
 
-    // ====================== SHOW MODAL ======================
     public async Task<IActionResult> ModalCTL(int id)
     {
       var product = await _ctlService.GetProductByIdAsync(id);
       if (product == null) return NotFound();
-
       return PartialView("~/Views/ProductCTL/ModalCTL.cshtml", product);
     }
 
@@ -192,7 +199,6 @@ namespace AspnetCoreMvcFull.Controllers
           .ToList();
 
       allowedItems.Insert(0, new SelectListItem { Value = "", Text = "-- Chọn danh mục --" });
-
       ViewBag.CategoryList = new SelectList(allowedItems, "Value", "Text", selectedCategoryId?.ToString() ?? "");
     }
   }

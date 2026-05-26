@@ -66,7 +66,7 @@
 				</li>
 			</ul>
 		</li>
-        <li class='menu-item@(currentPage.StartsWith("/ProductCTL") || currentPage.StartsWith("/CaoSuCTLCotroller") || currentPage.StartsWith("/GangCauCTLCotroller") || currentPage.StartsWith("/ThanHinhCTLCotronller") || currentPage.StartsWith("/CTLController") ? " active open" : "")'>
+        <li class='menu-item@(currentPage.StartsWith("/ProductCTL") || currentPage.StartsWith("/CaoSuCTLCotroller") || currentPage.StartsWith("/GangCauCTLCotroller") || currentPage.StartsWith("/ThanHinhCTLCotronller") || currentPage.StartsWith("/CTL") ? " active open" : "")'>
 			<a href="javascript:void(0);" class="menu-link menu-toggle">
 				<i class="menu-icon tf-icons bx bx-store"></i>
 				<div>Bộ Phận CTL</div>
@@ -92,7 +92,6 @@
 						<div>Thành Hình & Lưu Hóa</div>
 					</a>
 				</li>
-                <!-- === Hai mục mới === -->
                 <li class='menu-item@(currentPage.StartsWith("/CTL/ListProductStandardCTL") ? " active" : "")'>
                     <a asp-controller="CTL" asp-action="ListProductStandardCTL" class="menu-link">
                         <div>TC Theo Quy Cách</div>

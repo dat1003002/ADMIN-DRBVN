@@ -12,6 +12,14 @@
                     <h5 class="mb-0">Thêm Mới Sản Phẩm CTL</h5>
                 </div>
                 <div class="card-body">
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Lỗi:</strong> @ViewBag.ErrorMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
                     <form asp-controller="CTL"
                           asp-action="CreateCTL"
                           method="post"
@@ -20,7 +28,6 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
 
-                        <!-- Hidden CategoryId -->
                         <input type="hidden" asp-for="CategoryId" />
 
                         <div class="row mb-3">
@@ -39,7 +46,7 @@
                                 <input type="text"
                                        class="form-control bg-light"
                                        readonly
-                                       value="@(Model.CategoryId == 39 ? "Tiêu Chuẩn Theo Quy Cách" : "Tiêu Chuẩn Shoepad")" />
+                                       value="@ViewBag.CategoryName" />
                             </div>
                         </div>
 
