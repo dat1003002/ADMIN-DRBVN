@@ -1,0 +1,95 @@
+@model AspnetCoreMvcFull.ModelDTO.Product.MSDTO
+@{
+    ViewData["Title"] = "Chỉnh Sửa";
+    Layout = "~/Views/Shared/_ContentNavbarLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header text-white">
+                    <h5 class="mb-0">Chỉnh Sửa Bảng Hướng Dẫn Công Việc</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="MainMS" 
+                          asp-action="MainEditMS" 
+                          method="post" 
+                          enctype="multipart/form-data">
+                        
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+                        <input type="hidden" asp-for="ProductId" />
+                        <input type="hidden" asp-for="CategoryId" />
+
+                        <div class="row mb-3">
+                            <label asp-for="Name" class="col-sm-3 col-form-label fw-bold">
+                                Tên Sản Phẩm <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label fw-bold">Danh Mục</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-light" readonly value="@ViewBag.CategoryName" />
+                            </div>
+                        </div>
+
+                        <!-- Ảnh hiện có -->
+                        @if (Model.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
+                        {
+                            <div class="row mb-4">
+                                <label class="col-sm-3 col-form-label fw-bold">Ảnh hiện có</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        @for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+                                        {
+                                            <div class="col-md-3 mb-2">
+                                                <img src="@Url.Content(Model.ExistingImagePaths[i])" 
+                                                     class="img-fluid rounded" 
+                                                     style="height: 120px; object-fit: cover;" />
+                                                <div class="form-check mt-1">
+                                                    <input type="checkbox" class="form-check-input delete-checkbox" 
+                                                           name="DeletedImagePaths" value="@Model.ExistingImagePaths[i]" />
+                                                    <label class="form-check-label text-danger">Xóa</label>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Upload ảnh mới</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="ImageFiles" multiple class="form-control" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Upload PDF mới (tùy chọn)</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="PdfFile" class="form-control" accept=".pdf" />
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-end mt-4">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary me-2">Lưu Thay Đổi</button>
+                                <a asp-controller="MainMS" 
+                                   asp-action="ListCalender" 
+                                   class="btn btn-secondary">Hủy</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
