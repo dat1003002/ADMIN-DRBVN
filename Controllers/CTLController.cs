@@ -16,7 +16,7 @@ namespace AspnetCoreMvcFull.Controllers
     private readonly ICTLService _ctlService;
     private const int PageSize = 9;
 
-    private readonly List<int> AllowedCategoryIds = new List<int> { 39, 42 };
+    private readonly List<int> AllowedCategoryIds = new List<int> { 46, 47 };
 
     public CTLController(ICTLService ctlService)
     {
@@ -24,14 +24,14 @@ namespace AspnetCoreMvcFull.Controllers
     }
     public async Task<IActionResult> ListProductStandardCTL(int page = 1, string searchName = null)
     {
-      return await GetPagedList(39, page, searchName,
+      return await GetPagedList(46, page, searchName,
           "~/Views/ProductCTL/ListProductStandardCTL.cshtml",
           "Tiêu Chuẩn Theo Quy Cách");
     }
 
     public async Task<IActionResult> ListProductStandardShoepad(int page = 1, string searchName = null)
     {
-      return await GetPagedList(42, page, searchName,
+      return await GetPagedList(47, page, searchName,
           "~/Views/ProductCTL/ListProductStandardShoepad.cshtml",
           "Tiêu Chuẩn Shoepad");
     }
@@ -54,7 +54,7 @@ namespace AspnetCoreMvcFull.Controllers
     }
     public async Task<IActionResult> CreateCTL(int categoryId = 0)
     {
-      if (categoryId != 39 && categoryId != 42)
+      if (categoryId != 46 && categoryId != 47)
       {
         TempData["Error"] = "Không thể xác định danh mục. Vui lòng truy cập từ tab đúng.";
         return RedirectToAction(nameof(ListProductStandardCTL));
@@ -83,7 +83,7 @@ namespace AspnetCoreMvcFull.Controllers
       {
         await _ctlService.AddProductAsync(ctlDTO);
 
-        return ctlDTO.CategoryId == 39
+        return ctlDTO.CategoryId == 46
             ? RedirectToAction(nameof(ListProductStandardCTL))
             : RedirectToAction(nameof(ListProductStandardShoepad));
       }
@@ -146,7 +146,7 @@ namespace AspnetCoreMvcFull.Controllers
         if (ModelState.IsValid)
         {
           await _ctlService.UpdateProductAsync(ctlDTO);
-          return ctlDTO.CategoryId == 39
+          return ctlDTO.CategoryId == 46
               ? RedirectToAction(nameof(ListProductStandardCTL))
               : RedirectToAction(nameof(ListProductStandardShoepad));
         }
