@@ -1,10 +1,10 @@
-@model AspnetCoreMvcFull.ModelDTO.Product.CTLDTO
+@model AspnetCoreMvcFull.ModelDTO.Product.MSDTO
 
 @if (Model != null)
 {
     <div class="text-center">
         <h5 class="mb-3">@Model.Name</h5>
-        
+
         @if (Model.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
         {
             <div id="modalCarousel" class="carousel slide" data-bs-touch="true" data-bs-interval="false">
@@ -43,6 +43,7 @@
             <img src="~/public/products/no-image.jpg" alt="No Image" style="width:100%;" />
         }
     </div>
+
     <script>
         function initializeModalCarousel() {
             const carouselElement = document.getElementById('modalCarousel');
@@ -50,13 +51,14 @@
 
             const carousel = bootstrap.Carousel.getOrCreateInstance(carouselElement);
 
+            // Click vào ảnh → chuyển slide tiếp theo
             carouselElement.querySelectorAll('.clickable-image').forEach(img => {
                 img.onclick = () => carousel.next();
             });
 
+            // Hỗ trợ vuốt tay trên mobile
             let touchStartX = 0;
             let touchEndX = 0;
-
             carouselElement.addEventListener('touchstart', e => {
                 touchStartX = e.changedTouches[0].screenX;
             }, { passive: true });
@@ -71,12 +73,14 @@
                     } else {
                         carousel.prev();
                     }
-                } 
+                }
             }, { passive: true });
         }
 
+        // Khởi tạo carousel
         initializeModalCarousel();
 
+        // Khởi tạo lại khi modal được mở
         const modalElement = document.querySelector('.modal');
         if (modalElement) {
             modalElement.addEventListener('shown.bs.modal', initializeModalCarousel);
