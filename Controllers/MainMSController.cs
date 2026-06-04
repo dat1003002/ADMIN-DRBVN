@@ -17,7 +17,7 @@ namespace AspnetCoreMvcFull.Controllers
 
     private readonly List<int> AllowedCategoryIds = new List<int>
         {
-            34, 35, 36, 37, 47, 48, 49, 50, 38, 52, 53, 54
+            34, 35, 36, 37, 39, 40, 41, 42, 38, 43, 44, 45
         };
 
     public MainMSController(IMSService msService)
@@ -57,28 +57,28 @@ namespace AspnetCoreMvcFull.Controllers
         => await GetPagedList(37, page, searchName, "~/Views/MS/DRB1/ListStorageDRB1.cshtml", "TC Storage DRB1");
 
     public async Task<IActionResult> ListBanburyDRB2(int page = 1, string searchName = null)
-        => await GetPagedList(47, page, searchName, "~/Views/MS/DRB2/ListBanburyDRB2.cshtml", "TC Banbury DRB2");
+        => await GetPagedList(39, page, searchName, "~/Views/MS/DRB2/ListBanburyDRB2.cshtml", "TC Banbury DRB2");
 
     public async Task<IActionResult> ListOpenMillDRB2(int page = 1, string searchName = null)
-        => await GetPagedList(48, page, searchName, "~/Views/MS/DRB2/ListOpenMillDRB2.cshtml", "TC Open mill DRB2");
+        => await GetPagedList(40, page, searchName, "~/Views/MS/DRB2/ListOpenMillDRB2.cshtml", "TC Open mill DRB2");
 
     public async Task<IActionResult> ListWeighingDRB2(int page = 1, string searchName = null)
-        => await GetPagedList(49, page, searchName, "~/Views/MS/DRB2/ListWeighingDRB2.cshtml", "TC Weighing DRB2");
+        => await GetPagedList(41, page, searchName, "~/Views/MS/DRB2/ListWeighingDRB2.cshtml", "TC Weighing DRB2");
 
     public async Task<IActionResult> ListStorageDRB2(int page = 1, string searchName = null)
-        => await GetPagedList(50, page, searchName, "~/Views/MS/DRB2/ListStorageDRB2.cshtml", "TC Storage DRB2");
+        => await GetPagedList(42, page, searchName, "~/Views/MS/DRB2/ListStorageDRB2.cshtml", "TC Storage DRB2");
 
     public async Task<IActionResult> ListCalender(int page = 1, string searchName = null)
         => await GetPagedList(38, page, searchName, "~/Views/MS/Calender/ListCalender.cshtml", "TC Calender");
 
     public async Task<IActionResult> ListOpenMillCalender(int page = 1, string searchName = null)
-        => await GetPagedList(52, page, searchName, "~/Views/MS/Calender/ListOpenMillCalender.cshtml", "TC Open mill Calender");
+        => await GetPagedList(43, page, searchName, "~/Views/MS/Calender/ListOpenMillCalender.cshtml", "TC Open mill Calender");
 
     public async Task<IActionResult> ListLinerWinding(int page = 1, string searchName = null)
-        => await GetPagedList(53, page, searchName, "~/Views/MS/Calender/ListLinerWinding.cshtml", "TC Liner Winding");
+        => await GetPagedList(44, page, searchName, "~/Views/MS/Calender/ListLinerWinding.cshtml", "TC Liner Winding");
 
     public async Task<IActionResult> ListReuseRubber(int page = 1, string searchName = null)
-        => await GetPagedList(54, page, searchName, "~/Views/MS/Calender/ListReuseRubber.cshtml", "TC Re-use Rubber Line");
+        => await GetPagedList(45, page, searchName, "~/Views/MS/Calender/ListReuseRubber.cshtml", "TC Re-use Rubber Line");
     public async Task<IActionResult> MainCreateMS(int categoryId)
     {
       if (!AllowedCategoryIds.Contains(categoryId))
@@ -114,14 +114,14 @@ namespace AspnetCoreMvcFull.Controllers
           35 => RedirectToAction("ListOpenMillDRB1"),
           36 => RedirectToAction("ListWeighingDRB1"),
           37 => RedirectToAction("ListStorageDRB1"),
-          47 => RedirectToAction("ListBanburyDRB2"),
-          48 => RedirectToAction("ListOpenMillDRB2"),
-          49 => RedirectToAction("ListWeighingDRB2"),
-          50 => RedirectToAction("ListStorageDRB2"),
+          39 => RedirectToAction("ListBanburyDRB2"),
+          40 => RedirectToAction("ListOpenMillDRB2"),
+          41 => RedirectToAction("ListWeighingDRB2"),
+          42 => RedirectToAction("ListStorageDRB2"),
           38 => RedirectToAction("ListCalender"),
-          52 => RedirectToAction("ListOpenMillCalender"),
-          53 => RedirectToAction("ListLinerWinding"),
-          54 => RedirectToAction("ListReuseRubber"),
+          43 => RedirectToAction("ListOpenMillCalender"),
+          44 => RedirectToAction("ListLinerWinding"),
+          45 => RedirectToAction("ListReuseRubber"),
           _ => RedirectToAction("ListCalender")
         };
       }
@@ -154,14 +154,14 @@ namespace AspnetCoreMvcFull.Controllers
           35 => RedirectToAction("ListOpenMillDRB1"),
           36 => RedirectToAction("ListWeighingDRB1"),
           37 => RedirectToAction("ListStorageDRB1"),
-          47 => RedirectToAction("ListBanburyDRB2"),
-          48 => RedirectToAction("ListOpenMillDRB2"),
-          49 => RedirectToAction("ListWeighingDRB2"),
-          50 => RedirectToAction("ListStorageDRB2"),
+          39 => RedirectToAction("ListBanburyDRB2"),
+          40 => RedirectToAction("ListOpenMillDRB2"),
+          41 => RedirectToAction("ListWeighingDRB2"),
+          42 => RedirectToAction("ListStorageDRB2"),
           38 => RedirectToAction("ListCalender"),
-          52 => RedirectToAction("ListOpenMillCalender"),
-          53 => RedirectToAction("ListLinerWinding"),
-          54 => RedirectToAction("ListReuseRubber"),
+          43 => RedirectToAction("ListOpenMillCalender"),
+          44 => RedirectToAction("ListLinerWinding"),
+          45 => RedirectToAction("ListReuseRubber"),
           _ => RedirectToAction("ListCalender")
         };
       }
