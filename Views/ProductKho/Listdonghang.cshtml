@@ -2,28 +2,27 @@
 @using X.PagedList.Mvc.Core
 @using X.PagedList
 
-@{	
+@{
     ViewData["Title"] = "Kho Đóng Hàng";
 }
 
 <div class="d-flex justify-content-between">
-    <!-- Nút thêm mới sản phẩm -->
-    <a asp-controller="Donghang" asp-action="CreatekhoDH" 
+    <a asp-controller="Donghang" asp-action="CreatekhoDH"
        style="background: #428BCA; border: 1px solid #428BCA; color: white; padding: 6px; font-size: 14px; border-radius: 5px; text-decoration: none;">
         Thêm Mới
     </a>
-    <!-- Form tìm kiếm sản phẩm -->
-    <form asp-controller="Donghang" asp-action="SearchPoductDH" method="get" 
+
+    <form asp-controller="Donghang" asp-action="SearchPoductDH" method="get"
           style="display: flex; align-items: center; margin-right: 20px;">
         <div style="display: inline-flex; border: 1px solid #ccc; border-radius: 2px; overflow: hidden;">
             <input type="hidden" name="page" value="@Model.PageNumber" />
-            <input type="text" 
-                   name="name" 
-                   placeholder="Nhập tên sản phẩm để tìm kiếm" 
-                   style="border: none; padding: 5px 8px; font-size: 14px; width: 250px; height: 30px; outline: none;" 
-                   required 
+            <input type="text"
+                   name="name"
+                   placeholder="Nhập tên sản phẩm để tìm kiếm"
+                   style="border: none; padding: 5px 8px; font-size: 14px; width: 250px; height: 30px; outline: none;"
+                   required
                    value="@ViewData["SearchTerm"]" />
-            <button type="submit" 
+            <button type="submit"
                     style="padding: 5px 12px; background-color: #428BCA; color: white; border: none; cursor: pointer; font-size: 14px; height: 30px; outline: none;">
                 Tìm kiếm
             </button>
@@ -38,33 +37,36 @@
             Không tìm thấy sản phẩm nào với từ khóa "@ViewData["SearchTerm"]".
         </div>
     }
+
     <div class="row">
         @foreach (var product in Model)
         {
             <div class="col-12 col-sm-6 col-md-4 mb-4">
                 <div class="card text-center custom-card" style="border: 2px solid #a1a3a5; display: flex; flex-direction: column;">
                     <div class="image-container">
-                        <img class="card-img-top mx-auto custom-image" 
-                             src="@Url.Content("~/images/" + product.image)" 
+                        <img class="card-img-top mx-auto custom-image"
+                             src="@Url.Content("~/images/" + product.image)"
                              alt="@product.name">
+
                         <div class="button-container">
-                            <a asp-controller="Donghang" 
-                               asp-action="EditKhoDH" 
-                               asp-route-id="@product.ProductId" 
+                            <a asp-controller="Donghang"
+                               asp-action="EditKhoDH"
+                               asp-route-id="@product.ProductId"
                                style="background: #428BCA; border: 1px solid #428BCA; color: white; padding: 2px; font-size: 9px; border-radius: 5px; text-decoration: none;">
                                 <i class='bx bx-edit'></i>
                             </a>
-                            <button type="button" 
-                                    onclick="deleteProduct(@product.ProductId)" 
+                            <button type="button"
+                                    onclick="deleteProduct(@product.ProductId)"
                                     style="margin: 0; padding: 3px; background: #B74635; color: white; border: #B74635; border-radius: 4px;">
                                 <i class="bx bx-trash-alt"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="card-body-title" 
-                         onclick="showProductDetails(@product.ProductId)" 
-                         data-bs-toggle="modal" 
-                         data-bs-target="#modalScrollable" 
+
+                    <div class="card-body-title"
+                         onclick="loadProduct(@product.ProductId)"
+                         data-bs-toggle="modal"
+                         data-bs-target="#modalScrollable"
                          style="margin-top: auto; cursor: pointer;">
                         <p class="custom-title">@product.name</p>
                     </div>
@@ -73,15 +75,13 @@
         }
     </div>
 
-    <!-- Phân trang -->
-    <div class="pagination">
+    <div class="pagination" style="text-align:center; margin-top:30px;">
         @if (Model.PageCount > 1)
         {
             if (Model.HasPreviousPage)
             {
-				<a href="@Url.Action("Listdonghang", new { name = ViewData["SearchTerm"], page = Model.PageNumber - 1 })">«</a>
+                <a href="@Url.Action("Listdonghang", new { name = ViewData["SearchTerm"], page = Model.PageNumber - 1 })">«</a>
             }
-
             @for (int i = 1; i <= Model.PageCount; i++)
             {
                 if (i == Model.PageNumber)
@@ -90,30 +90,27 @@
                 }
                 else
                 {
-					<a href="@Url.Action("Listdonghang", new { name = ViewData["SearchTerm"], page = i })">@i</a>
+                    <a href="@Url.Action("Listdonghang", new { name = ViewData["SearchTerm"], page = i })">@i</a>
                 }
             }
-
             if (Model.HasNextPage)
             {
-				<a href="@Url.Action("Listdonghang", new { name = ViewData["SearchTerm"], page = Model.PageNumber + 1 })">»</a>
+                <a href="@Url.Action("Listdonghang", new { name = ViewData["SearchTerm"], page = Model.PageNumber + 1 })">»</a>
             }
         }
     </div>
 </div>
 
-<!-- Modal hiển thị chi tiết sản phẩm -->
 <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document" style="max-width: 100%; width: 100%; height: 100%; margin: 0;">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content" style="height: 100%; border-radius: 0;">
-            <div class="modal-header d-flex justify-content-center" style="background: red;">
-                <h5 class="modal-title" style="color: white; font-size: 28px;">Bảng Hướng Dẫn Công Việc</h5>
+            <div class="modal-body p-0" id="modalBody" style="height: 100%; overflow: auto; background: #f8f9fa;">
             </div>
-            <div class="modal-body" id="modalBody" style="text-align: center;">
-                <!-- Nội dung chi tiết sản phẩm sẽ được tải bằng AJAX -->
-            </div>
-            <div class="modal-footer" style="background: red;">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+
+            <div class="modal-footer justify-content-center" style="position: fixed; bottom: 0; right: 0; z-index: 1050;">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" onclick="exitFullscreen()">
+                    Đóng
+                </button>
             </div>
         </div>
     </div>
@@ -137,7 +134,7 @@
         }
     }
 
-    function showProductDetails(productId) {
+    function loadProduct(productId) {
         $.ajax({
             url: '@Url.Action("showProductKhoDH", "Donghang")',
             type: 'GET',
@@ -145,6 +142,15 @@
             success: function (data) {
                 $('#modalBody').html(data);
                 $('#modalScrollable').modal('show');
+
+                $('#modalScrollable').one('shown.bs.modal', function () {
+                    const modalDialog = document.querySelector('#modalScrollable .modal-dialog');
+                    if (modalDialog && modalDialog.requestFullscreen) {
+                        modalDialog.requestFullscreen().catch(err => {
+                            console.log('Lỗi fullscreen:', err);
+                        });
+                    }
+                });
             },
             error: function (xhr, status, error) {
                 console.error(xhr);
@@ -152,4 +158,16 @@
             }
         });
     }
+
+    function exitFullscreen() {
+        if (document.fullscreenElement) {
+            document.exitFullscreen().catch(err => {
+                console.log('Lỗi thoát fullscreen:', err);
+            });
+        }
+    }
+
+    $('#modalScrollable').on('hidden.bs.modal', function () {
+        exitFullscreen();
+    });
 </script>
