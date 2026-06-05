@@ -119,19 +119,24 @@
     }
 </div>
 
+<!-- Modal Fullscreen -->
 <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content" style="height: 100%; border-radius: 0;">
-            <div class="modal-body p-0" id="modalBody" style="text-align:center; height: 100%; overflow: auto;"></div>
+            <div class="modal-body p-0" id="modalBody" style="height: 100%; overflow: auto; background: #f8f9fa;">
+            </div>
+
             <div class="modal-footer justify-content-center" style="position: fixed; bottom: 0; right: 0; z-index: 1050;">
-                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" onclick="exitFullscreen()">Đóng</button>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" onclick="exitFullscreen()">
+                    Đóng
+                </button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function loadProduct(productId) {
+        function loadProduct(productId) {
         $.ajax({
             url: '@Url.Action("MainModalMS", "MainMS")',
             type: 'GET',
@@ -139,9 +144,20 @@
             success: function (data) {
                 $('#modalBody').html(data);
                 $('#modalScrollable').modal('show');
+
+                // Fullscreen khi modal đã mở hoàn toàn
+                $('#modalScrollable').one('shown.bs.modal', function () {
+                    const modalDialog = document.querySelector('#modalScrollable .modal-dialog');
+                    if (modalDialog && modalDialog.requestFullscreen) {
+                        modalDialog.requestFullscreen().catch(err => {
+                            console.log('Lỗi fullscreen:', err);
+                        });
+                    }
+                });
             },
-            error: function () {
-                alert('Không thể tải dữ liệu.');
+            error: function (xhr) {
+                console.error(xhr);
+                alert('Không thể tải dữ liệu sản phẩm.');
             }
         });
     }
