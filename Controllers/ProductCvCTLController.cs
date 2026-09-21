@@ -57,9 +57,15 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateProductCvCTL(ProductCTLDTO product)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(product.PdfFile, ModelState);
+
       if (ModelState.IsValid)
       {
-        if (product.imageFile != null)
+        if (pdfImage != null)
+        {
+          product.image = pdfImage;
+        }
+        else if (product.imageFile != null)
         {
           var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", product.imageFile.FileName);
           using (var stream = new FileStream(filePath, FileMode.Create))
@@ -97,12 +103,18 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditProductCTL(ProductCTLDTO product)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(product.PdfFile, ModelState);
+
       if (ModelState.IsValid)
       {
         var existingProduct = await _productCvCTLService.GetProductByIdAsync(product.ProductId);
         if (existingProduct != null)
         {
-          if (product.imageFile == null)
+          if (pdfImage != null)
+          {
+            product.image = pdfImage;
+          }
+          else if (product.imageFile == null)
           {
             product.image = existingProduct.image;
           }

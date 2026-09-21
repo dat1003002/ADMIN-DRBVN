@@ -62,6 +62,15 @@
 								<input type="file" asp-for="imageFile" class="form-control" id="imageUpload" accept="image/*" />
 								<small class="form-text text-muted">Chọn ảnh mới nếu muốn thay thế ảnh hiện tại.</small>
 								<span asp-validation-for="imageFile" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-4 col-form-label" for="pdfFile">Tải File PDF Mới</label>
+								<div class="col-sm-8">
+									<input type="file" name="PdfFile" class="form-control" id="pdfFile" accept=".pdf" />
+									<small class="form-text text-muted">Trang đầu tiên của PDF sẽ được chuyển thành ảnh và thay thế ảnh hiện tại. Nếu chọn cả ảnh và PDF, hệ thống dùng PDF.</small>
+									<span asp-validation-for="PdfFile" class="text-danger"></span>
 							</div>
 						</div>
 

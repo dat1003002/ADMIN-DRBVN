@@ -46,9 +46,15 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateLHTHCTL(LuuHoaCTLDTO luuHoaCTLDTO)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(luuHoaCTLDTO.PdfFile, ModelState);
+
       if (ModelState.IsValid)
       {
-        if (luuHoaCTLDTO.imageFile != null)
+        if (pdfImage != null)
+        {
+          luuHoaCTLDTO.image = pdfImage;
+        }
+        else if (luuHoaCTLDTO.imageFile != null)
         {
           var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", luuHoaCTLDTO.imageFile.FileName);
           using (var stream = new FileStream(filePath, FileMode.Create))
@@ -64,7 +70,7 @@ namespace AspnetCoreMvcFull.Controllers
       var categories = await _luuHoaCTLSevice.GetCategories();
       var filterCategoriGC = categories.Where(c => c.CategoryId == 9).ToList().ToList();
       ViewBag.CategoryList = new SelectList(filterCategoriGC, "CategoryId", "CategoryName");
-      return View(ListThanhHinhCTL);
+      return View("~/Views/ProductCTL/CreateLHTHCTL.cshtml", luuHoaCTLDTO);
     }
     public async Task<IActionResult> EditTHLHCTL(int id)
     {
@@ -85,16 +91,22 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditTHLHCTL(LuuHoaCTLDTO luuHoaCTLDTO)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(luuHoaCTLDTO.PdfFile, ModelState);
+
       if (!ModelState.IsValid)
       {
         var categories = await _luuHoaCTLSevice.GetCategories();
-        ViewBag.CategoryList = new SelectList(categories, "CategoryId", "CategoryName");
+        ViewBag.CategoryList = new SelectList(categories.Where(c => c.CategoryId == 9).ToList(), "CategoryId", "CategoryName");
         return View("~/Views/ProductCTL/EditTHLHCTL.cshtml", luuHoaCTLDTO);
       }
 
       var existingProduct = await _luuHoaCTLSevice.GetProductByIdAsync(luuHoaCTLDTO.ProductId);
 
-      if (luuHoaCTLDTO.imageFile != null && luuHoaCTLDTO.imageFile.Length > 0)
+      if (pdfImage != null)
+      {
+        luuHoaCTLDTO.image = pdfImage;
+      }
+      else if (luuHoaCTLDTO.imageFile != null && luuHoaCTLDTO.imageFile.Length > 0)
       {
         var fileName = Path.GetFileName(luuHoaCTLDTO.imageFile.FileName);
         var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");

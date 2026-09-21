@@ -56,9 +56,15 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateProductCSCTL(ProductCSCTLDTO productCSCTLDTO)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(productCSCTLDTO.PdfFile, ModelState);
+
       if (ModelState.IsValid)
       {
-        if (productCSCTLDTO.imageFile != null)
+        if (pdfImage != null)
+        {
+          productCSCTLDTO.image = pdfImage;
+        }
+        else if (productCSCTLDTO.imageFile != null)
         {
           var filePath = Path .Combine(Directory.GetCurrentDirectory(), "wwwroot/images",productCSCTLDTO.imageFile.FileName);
           using (var stream = new FileStream(filePath, FileMode.Create))
@@ -72,8 +78,8 @@ namespace AspnetCoreMvcFull.Controllers
         return RedirectToAction("ListCaoSuCTL");
       }
       var categories = await _productCSCTLService.GetCategories();
-      ViewBag.CategoryList = new SelectList(categories, "CategoryId", "CategoryName");
-      return View(productCSCTLDTO);
+      ViewBag.CategoryList = new SelectList(categories.Where(c => c.CategoryId == 7).ToList(), "CategoryId", "CategoryName");
+      return View("~/Views/ProductCTL/CreateProductCSCTL.cshtml", productCSCTLDTO);
     }
     [HttpGet]
     public async Task<IActionResult> EditProductCSCTL(int id)
@@ -95,16 +101,22 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditProductCSCTL(ProductCSCTLDTO product)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(product.PdfFile, ModelState);
+
       if (!ModelState.IsValid)
       {
         var categories = await _productCSCTLService.GetCategories();
-        ViewBag.CategoryList = new SelectList(categories, "CategoryId", "CategoryName");
+        ViewBag.CategoryList = new SelectList(categories.Where(c => c.CategoryId == 7).ToList(), "CategoryId", "CategoryName");
         return View("~/Views/ProductCTL/EditProductCSCTL.cshtml", product);
       }
 
       var existingProduct = await _productCSCTLService.GetProductByIdAsync(product.ProductId);
 
-      if (product.imageFile != null && product.imageFile.Length > 0)
+      if (pdfImage != null)
+      {
+        product.image = pdfImage;
+      }
+      else if (product.imageFile != null && product.imageFile.Length > 0)
       {
         var fileName = Path.GetFileName(product.imageFile.FileName);
         var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
