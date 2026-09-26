@@ -56,9 +56,15 @@ namespace AspnetCoreMvcFull.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatekhoDH(DonghangkhoDTO product)
         {
+            var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(product.PdfFile, ModelState);
+
             if (ModelState.IsValid)
             {
-                if (product.imageFile != null && product.imageFile.Length > 0)
+                if (pdfImage != null)
+                {
+                    product.image = pdfImage;
+                }
+                else if (product.imageFile != null && product.imageFile.Length > 0)
                 {
                     var fileName = Path.GetFileName(product.imageFile.FileName);
                     var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
@@ -114,6 +120,8 @@ namespace AspnetCoreMvcFull.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditKhoDH(DonghangkhoDTO product)
         {
+            var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(product.PdfFile, ModelState);
+
             if (!ModelState.IsValid)
             {
                 var categories = await _dongHangService.GetCategories();
@@ -128,7 +136,11 @@ namespace AspnetCoreMvcFull.Controllers
                 return NotFound();
             }
 
-            if (product.imageFile != null && product.imageFile.Length > 0)
+            if (pdfImage != null)
+            {
+                product.image = pdfImage;
+            }
+            else if (product.imageFile != null && product.imageFile.Length > 0)
             {
                 var fileName = Path.GetFileName(product.imageFile.FileName);
                 var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");

@@ -46,9 +46,15 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateGCCTL(ProductGCCTLDTO productGCCTLDTO)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(productGCCTLDTO.PdfFile, ModelState);
+
       if (ModelState.IsValid)
       {
-        if (productGCCTLDTO.imageFile != null)
+        if (pdfImage != null)
+        {
+          productGCCTLDTO.image = pdfImage;
+        }
+        else if (productGCCTLDTO.imageFile != null)
         {
           var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", productGCCTLDTO.imageFile.FileName);
           using (var stream = new FileStream(filePath, FileMode.Create))
@@ -64,7 +70,7 @@ namespace AspnetCoreMvcFull.Controllers
       var categories = await _gangCauCTLService.GetCategories();
       var filterCategoriGC = categories.Where(c => c.CategoryId == 8).ToList().ToList();
       ViewBag.CategoryList = new SelectList(filterCategoriGC, "CategoryId", "CategoryName");
-      return View(ListGangCauCTL);
+      return View("~/Views/ProductCTL/CreateGCCTL.cshtml", productGCCTLDTO);
     }
     public async Task<IActionResult> EditGCCTL(int id)
     {
@@ -84,16 +90,22 @@ namespace AspnetCoreMvcFull.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditGCCTL(ProductGCCTLDTO productGCCTLDTO)
     {
+      var pdfImage = await PdfImageConverter.ConvertFirstPageAsync(productGCCTLDTO.PdfFile, ModelState);
+
       if (!ModelState.IsValid)
       {
         var categories = await _gangCauCTLService.GetCategories();
-        ViewBag.CategoryList = new SelectList(categories, "CategoryId", "CategoryName");
-        return View("~/Views/ProductCTL/EditProductCSCTL.cshtml", productGCCTLDTO);
+        ViewBag.CategoryList = new SelectList(categories.Where(c => c.CategoryId == 8).ToList(), "CategoryId", "CategoryName");
+        return View("~/Views/ProductCTL/EditGCCTL.cshtml", productGCCTLDTO);
       }
 
       var existingProduct = await _gangCauCTLService.GetProductByIdAsync(productGCCTLDTO.ProductId);
 
-      if (productGCCTLDTO.imageFile != null && productGCCTLDTO.imageFile.Length > 0)
+      if (pdfImage != null)
+      {
+        productGCCTLDTO.image = pdfImage;
+      }
+      else if (productGCCTLDTO.imageFile != null && productGCCTLDTO.imageFile.Length > 0)
       {
         var fileName = Path.GetFileName(productGCCTLDTO.imageFile.FileName);
         var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
