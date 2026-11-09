@@ -17,8 +17,38 @@ namespace AspnetCoreMvcFull.Controllers
 
     private readonly List<int> AllowedCategoryIds = new List<int>
         {
-            34, 35, 36, 37, 39, 40, 41, 42, 38, 43, 44, 45
+            34, 35, 36, 37, 39, 40, 41, 42, 38, 43, 44, 45,
+            48, 49, 50, 51, 52, 53, 54, 55, 56, 57
         };
+
+    private const string InfoDRB2View = "~/Views/MS/DRB2/ListThongTinDRB2.cshtml";
+
+    private IActionResult RedirectToList(int categoryId) => categoryId switch
+    {
+      34 => RedirectToAction("ListBanburyDRB1"),
+      35 => RedirectToAction("ListOpenMillDRB1"),
+      36 => RedirectToAction("ListWeighingDRB1"),
+      37 => RedirectToAction("ListStorageDRB1"),
+      39 => RedirectToAction("ListBanburyDRB2"),
+      40 => RedirectToAction("ListOpenMillDRB2"),
+      41 => RedirectToAction("ListWeighingDRB2"),
+      42 => RedirectToAction("ListStorageDRB2"),
+      38 => RedirectToAction("ListCalender"),
+      43 => RedirectToAction("ListOpenMillCalender"),
+      44 => RedirectToAction("ListLinerWinding"),
+      45 => RedirectToAction("ListReuseRubber"),
+      48 => RedirectToAction("ListPhieuATHCDRB2"),
+      49 => RedirectToAction("List5SDRB2"),
+      50 => RedirectToAction("ListAnToanDRB2"),
+      51 => RedirectToAction("ListSoDoToChucDRB2"),
+      52 => RedirectToAction("ListThongBaoDRB2"),
+      53 => RedirectToAction("ListVanHanhMayDRB2"),
+      54 => RedirectToAction("ListChuyenCanDRB2"),
+      55 => RedirectToAction("ListPheThaiDRB2"),
+      56 => RedirectToAction("ListNangXuatDRB2"),
+      57 => RedirectToAction("ListHinhAnhNguyenLieuDRB2"),
+      _ => RedirectToAction("ListCalender")
+    };
 
     public MainMSController(IMSService msService)
     {
@@ -68,6 +98,36 @@ namespace AspnetCoreMvcFull.Controllers
     public async Task<IActionResult> ListStorageDRB2(int page = 1, string searchName = null)
         => await GetPagedList(42, page, searchName, "~/Views/MS/DRB2/ListStorageDRB2.cshtml", "TC Storage DRB2");
 
+    public async Task<IActionResult> ListPhieuATHCDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(48, page, searchName, InfoDRB2View, "Phiếu an toàn hóa chất DRB2");
+
+    public async Task<IActionResult> List5SDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(49, page, searchName, InfoDRB2View, "5S Banbury DRB2");
+
+    public async Task<IActionResult> ListAnToanDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(50, page, searchName, InfoDRB2View, "An Toàn Banbury DRB2");
+
+    public async Task<IActionResult> ListSoDoToChucDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(51, page, searchName, InfoDRB2View, "Sơ đồ tổ chức Banbury DRB2");
+
+    public async Task<IActionResult> ListThongBaoDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(52, page, searchName, InfoDRB2View, "Thông báo quan trọng Banbury DRB2");
+
+    public async Task<IActionResult> ListVanHanhMayDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(53, page, searchName, InfoDRB2View, "Tỷ lệ vận hành máy Banbury DRB2");
+
+    public async Task<IActionResult> ListChuyenCanDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(54, page, searchName, InfoDRB2View, "Tỷ lệ chuyên cần Hỗ Trợ Sản Xuất DRB2");
+
+    public async Task<IActionResult> ListPheThaiDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(55, page, searchName, InfoDRB2View, "Tỷ lệ phế thải Hỗ Trợ Sản Xuất DRB2");
+
+    public async Task<IActionResult> ListNangXuatDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(56, page, searchName, InfoDRB2View, "Năng xuất người/ giờ Banbury DRB2");
+
+    public async Task<IActionResult> ListHinhAnhNguyenLieuDRB2(int page = 1, string searchName = null)
+        => await GetPagedList(57, page, searchName, InfoDRB2View, "Hình ảnh nguyên liệu DRB2");
+
     public async Task<IActionResult> ListCalender(int page = 1, string searchName = null)
         => await GetPagedList(38, page, searchName, "~/Views/MS/Calender/ListCalender.cshtml", "TC Calender");
 
@@ -107,23 +167,7 @@ namespace AspnetCoreMvcFull.Controllers
       if (ModelState.IsValid)
       {
         await _msService.AddProductAsync(mSDTO);
-
-        return mSDTO.CategoryId switch
-        {
-          34 => RedirectToAction("ListBanburyDRB1"),
-          35 => RedirectToAction("ListOpenMillDRB1"),
-          36 => RedirectToAction("ListWeighingDRB1"),
-          37 => RedirectToAction("ListStorageDRB1"),
-          39 => RedirectToAction("ListBanburyDRB2"),
-          40 => RedirectToAction("ListOpenMillDRB2"),
-          41 => RedirectToAction("ListWeighingDRB2"),
-          42 => RedirectToAction("ListStorageDRB2"),
-          38 => RedirectToAction("ListCalender"),
-          43 => RedirectToAction("ListOpenMillCalender"),
-          44 => RedirectToAction("ListLinerWinding"),
-          45 => RedirectToAction("ListReuseRubber"),
-          _ => RedirectToAction("ListCalender")
-        };
+        return RedirectToList(mSDTO.CategoryId);
       }
 
       ViewBag.CategoryName = await GetCategoryNameAsync(mSDTO.CategoryId);
@@ -147,23 +191,7 @@ namespace AspnetCoreMvcFull.Controllers
       if (ModelState.IsValid)
       {
         await _msService.UpdateProductAsync(mSDTO);
-
-        return mSDTO.CategoryId switch
-        {
-          34 => RedirectToAction("ListBanburyDRB1"),
-          35 => RedirectToAction("ListOpenMillDRB1"),
-          36 => RedirectToAction("ListWeighingDRB1"),
-          37 => RedirectToAction("ListStorageDRB1"),
-          39 => RedirectToAction("ListBanburyDRB2"),
-          40 => RedirectToAction("ListOpenMillDRB2"),
-          41 => RedirectToAction("ListWeighingDRB2"),
-          42 => RedirectToAction("ListStorageDRB2"),
-          38 => RedirectToAction("ListCalender"),
-          43 => RedirectToAction("ListOpenMillCalender"),
-          44 => RedirectToAction("ListLinerWinding"),
-          45 => RedirectToAction("ListReuseRubber"),
-          _ => RedirectToAction("ListCalender")
-        };
+        return RedirectToList(mSDTO.CategoryId);
       }
 
       ViewBag.CategoryName = await GetCategoryNameAsync(mSDTO.CategoryId);

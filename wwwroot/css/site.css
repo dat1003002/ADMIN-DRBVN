@@ -1,1 +1,18 @@
-/* Custom styles goes here */
+.layout-menu.menu-vertical .menu-inner > .menu-item > .menu-link {
+  min-height: 38px;
+}
+
+.layout-menu.menu-vertical .menu-sub .menu-link {
+  min-height: 30px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 0.9rem;
+}
+
+.layout-menu.menu-vertical .menu-sub .menu-item {
+  margin-top: 1px;
+}
+
+.layout-menu .menu-inner > .ps__rail-y {
+  display: none !important;
+}
