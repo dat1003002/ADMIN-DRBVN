@@ -2,6 +2,20 @@
     TempData.Keep();
 
     string? currentPage = ViewContext.HttpContext.Request.Path;
+
+    var drb2InfoPages = new[]
+    {
+        "/MainMS/List5SDRB2",
+        "/MainMS/ListAnToanDRB2",
+        "/MainMS/ListSoDoToChucDRB2",
+        "/MainMS/ListThongBaoDRB2",
+        "/MainMS/ListVanHanhMayDRB2",
+        "/MainMS/ListChuyenCanDRB2",
+        "/MainMS/ListPheThaiDRB2",
+        "/MainMS/ListNangXuatDRB2",
+        "/MainMS/ListHinhAnhNguyenLieuDRB2"
+    };
+    bool isDrb2InfoPage = drb2InfoPages.Any(p => currentPage.StartsWith(p));
 }
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
@@ -268,6 +282,8 @@
                                                                       currentPage.StartsWith("/MainMS/ListOpenMillDRB2") ||
                                                                       currentPage.StartsWith("/MainMS/ListWeighingDRB2") ||
                                                                       currentPage.StartsWith("/MainMS/ListStorageDRB2") ||
+                                                                      currentPage.StartsWith("/MainMS/ListPhieuATHCDRB2") ||
+                                                                      isDrb2InfoPage ||
                                                                       currentPage.StartsWith("/BanburyDRB2") ? " active open" : "")'>
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <div>Banbury DRB2</div>
@@ -292,6 +308,63 @@
                             <a asp-controller="MainMS" asp-action="ListStorageDRB2" class="menu-link">
                                 <div>TC Storage DRB2</div>
                             </a>
+                        </li>
+                        <li class='menu-item@(currentPage == "/MainMS/ListPhieuATHCDRB2" ? " active" : "")'>
+                            <a asp-controller="MainMS" asp-action="ListPhieuATHCDRB2" class="menu-link">
+                                <div>Phiếu an toàn hóa chất</div>
+                            </a>
+                        </li>
+                        <li class='menu-item@(isDrb2InfoPage ? " active open" : "")'>
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <div>Bản thông tin</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class='menu-item@(currentPage == "/MainMS/List5SDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="List5SDRB2" class="menu-link">
+                                        <div>5S</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListAnToanDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListAnToanDRB2" class="menu-link">
+                                        <div>An Toàn</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListSoDoToChucDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListSoDoToChucDRB2" class="menu-link">
+                                        <div>Sơ đồ tổ chức</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListThongBaoDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListThongBaoDRB2" class="menu-link">
+                                        <div>Thông báo quan trọng</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListVanHanhMayDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListVanHanhMayDRB2" class="menu-link">
+                                        <div>Tỷ Lệ Vận Hành Máy</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListChuyenCanDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListChuyenCanDRB2" class="menu-link">
+                                        <div>Tỷ Lệ Chuyên cần</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListPheThaiDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListPheThaiDRB2" class="menu-link">
+                                        <div>Tỷ Lệ Phế Thải</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListNangXuatDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListNangXuatDRB2" class="menu-link">
+                                        <div>Năng xuất người/giờ</div>
+                                    </a>
+                                </li>
+                                <li class='menu-item@(currentPage == "/MainMS/ListHinhAnhNguyenLieuDRB2" ? " active" : "")'>
+                                    <a asp-controller="MainMS" asp-action="ListHinhAnhNguyenLieuDRB2" class="menu-link">
+                                        <div>Hình Ảnh Nguyên Liệu</div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -347,32 +420,5 @@
                 </li>
             </ul>
         </li>
-    </ul>
-    <ul>
-    @* <li class='menu-item@(currentPage.StartsWith("/Pages/Account") ? " active open" : "")'> *@
-    @* 	<a href="javascript:void(0);" class="menu-link menu-toggle"> *@
-    @* 		<i class='menu-icon bx bx-user'></i> *@
-    @* 		<div>Người Dùng</div> *@
-    @* 	</a> *@
-    @* 	<ul class="menu-sub"> *@
-    @* 		<li class='menu-item@(currentPage == "/Pages/AccountSettings" ? " active" : "")'> *@
-    @* 			<a asp-controller="Pages" asp-action="AccountSettings" class="menu-link"> *@
-    @* 				<div>Danh Sách Người Dùng</div> *@
-    @* 			</a> *@
-    @* 		</li> *@
-    @* 		<li class='menu-item@(currentPage == "/Pages/AccountSett
-
-		ingsNotifications" ? " active" : "")'> *@
-    @* 			<a asp-controller="Pages" asp-action="AccountSettingsNotifications" class="menu-link"> *@
-    @* 				<div>Phân Quyền</div> *@
-    @* 			</a> *@
-    @* 		</li> *@
-    @* 		<li class='menu-item@(currentPage == "/Pages/AccountSettingsConnections" ? " active" : "")'> *@
-    @* 			<a asp-controller="Pages" asp-action="AccountSettingsConnections" class="menu-link"> *@
-    @* 				<div>Phân Công Xưởng</div> *@
-    @* 			</a> *@
-    @* 		</li> *@
-    @* 	</ul> *@
-    @* </li> *@
     </ul>
 </aside>
