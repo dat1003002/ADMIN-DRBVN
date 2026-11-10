@@ -7,18 +7,15 @@
 <div class="row">
 	<div class="col-xxl">
 		<div class="card mb-6">
-			<!-- Tiêu đề thẻ -->
 			<div class="card-header d-flex align-items-center justify-content-between">
 				<h5 class="mb-0">Tạo Mới Quy Cách Lõi Thép</h5>
 			</div>
 
-			<!-- Nội dung biểu mẫu -->
 			<div class="card-body">
 				<form asp-action="CreateProductLT" method="post">
 					@Html.AntiForgeryToken()
 
 					<div class="row">
-						<!-- Cột bên trái -->
 						<div class="col-md-6">
 							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label" for="mahangctl">Mã Sản Phẩm</label>
@@ -77,20 +74,19 @@
 							</div>
 
 							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="dodaycaosuketdinh3t">Độ Dày Cao Su Kết Dính 3T</label>
+								<label class="col-sm-4 col-form-label" for="dodaycaosuketdinh3t">Độ Dày Cao Su Kết Dính</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="dodaycaosuketdinh3t" placeholder="Độ Dày Cao Su Kết Dính 3T" />
+									<input type="text" class="form-control" asp-for="dodaycaosuketdinh3t" placeholder="Độ Dày Cao Su Kết Dính" />
 									<span asp-validation-for="dodaycaosuketdinh3t" class="text-danger"></span>
 								</div>
 							</div>
 						</div>
 
-						<!-- Cột bên phải -->
 						<div class="col-md-6">
 							<div class="row mb-3">
-								<label class="col-sm-4 col-form-label" for="khocaosuketdinh3t">Khổ Cao Su Kết Dính 3T</label>
+								<label class="col-sm-4 col-form-label" for="khocaosuketdinh3t">Khổ Cao Su Kết Dính</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control" asp-for="khocaosuketdinh3t" placeholder="Khổ Cao Su Kết Dính 3T" />
+									<input type="text" class="form-control" asp-for="khocaosuketdinh3t" placeholder="Khổ Cao Su Kết Dính" />
 									<span asp-validation-for="khocaosuketdinh3t" class="text-danger"></span>
 								</div>
 							</div>
@@ -135,7 +131,6 @@
 								</div>
 							</div>
 
-							<!-- Dropdown danh mục -->
 							<div class="row mb-3">
 								<label class="col-sm-4 col-form-label" for="CategoryId">Danh Mục</label>
 								<div class="col-sm-8">
@@ -148,7 +143,6 @@
 						</div>
 					</div>
 
-					<!-- Nút điều khiển -->
 					<div class="row justify-content-end">
 						<div class="col-sm-12 text-end">
 							<button type="submit" class="btn btn-primary">Lưu</button>
